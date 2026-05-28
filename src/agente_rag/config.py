@@ -41,6 +41,11 @@ class Settings:
     poligpt_base_url: str
     poligpt_api_key: str | None
     poligpt_model: str
+    embedder_provider: str
+    sentence_transformers_model: str
+    vector_store_provider: str
+    faiss_path: Path
+
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -62,6 +67,21 @@ class Settings:
             ),
             poligpt_api_key=os.getenv("POLIGPT_API_KEY"),
             poligpt_model=os.getenv("POLIGPT_MODEL", "poligpt"),
+            embedder_provider=os.getenv(
+                "EMBEDDER_PROVIDER",
+                "ollama",
+            ).strip().lower(),
+            sentence_transformers_model=os.getenv(
+                "SENTENCE_TRANSFORMERS_MODEL",
+                "paraphrase-multilingual-MiniLM-L12-v2",
+            ),
+            vector_store_provider=os.getenv(
+                "VECTOR_STORE_PROVIDER",
+                "chroma",
+            ).strip().lower(),
+            faiss_path=Path(
+                os.getenv("FAISS_PATH", str(repo_root / "data" / "dni.index"))
+            ),
         )
 
 
