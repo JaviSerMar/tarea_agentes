@@ -1,4 +1,4 @@
-"""Tests del chunker. No requieren Ollama ni red."""
+"""Tests del chunker sobre el corpus oficial DNI. No requieren Ollama ni red."""
 
 from pathlib import Path
 
@@ -8,17 +8,32 @@ from agente_rag.chunker import Chunk, load_corpus, split_documents
 
 CORPUS = Path(__file__).resolve().parents[1] / "corpus"
 
+EXPECTED_DNI_FILES = {
+    "01_faq_dni.txt",
+    "02_presentacion_desayunos.txt",
+    "03_charlas_abuelitos.txt",
+    "04_filosofia_dni.txt",
+    "05_resis_actividades.txt",
+    "06_coles_refuerzo.txt",
+    "07_desayunos_logistica.txt",
+    "08_preguntas_basicas.txt",
+    "09_como_participar.txt",
+    "10_proyectos.txt",
+    "11_horarios_ubicaciones.txt",
+    "12_contacto_redes.txt",
+    "13_mensajes_genericos.txt",
+    "14_impacto_social.txt",
+    "15_desayunos_100_preguntas.txt",
+    "16_resis_49_preguntas.txt",
+}
 
-def test_load_corpus_returns_four_docs():
+
+def test_load_corpus_returns_official_dni_docs():
     docs = load_corpus(CORPUS)
-    assert len(docs) == 4
-    assert all("name" in d and "text" in d for d in docs)
-    assert {d["name"] for d in docs} == {
-        "1_primero.txt",
-        "2_segundo.txt",
-        "3_tercero.txt",
-        "4_cuarto.txt",
-    }
+
+    assert len(docs) == 16
+    assert all("name" in document and "text" in document for document in docs)
+    assert {document["name"] for document in docs} == EXPECTED_DNI_FILES
 
 
 def test_load_corpus_missing_dir(tmp_path):
@@ -30,15 +45,18 @@ def test_split_documents_preserves_source():
     docs = load_corpus(CORPUS)
     chunks = split_documents(docs, chunk_size=500, chunk_overlap=100)
 
-    assert len(chunks) > 20, "se esperan al menos ~20 chunks con (500, 100)"
-    assert all(isinstance(c, Chunk) for c in chunks)
-    assert all(c.source.endswith(".txt") for c in chunks)
-    assert all(c.text and isinstance(c.text, str) for c in chunks)
-    assert all(c.id.endswith(f"chunk_{c.chunk_index:04d}") for c in chunks)
+    assert len(chunks) > 20, "se esperan múltiples chunks con el corpus DNI"
+    assert all(isinstance(chunk, Chunk) for chunk in chunks)
+    assert all(chunk.source in EXPECTED_DNI_FILES for chunk in chunks)
+    assert all(chunk.text and isinstance(chunk.text, str) for chunk in chunks)
+    assert all(
+        chunk.id.endswith(f"chunk_{chunk.chunk_index:04d}") for chunk in chunks
+    )
 
 
 def test_split_documents_chunk_size_bounded():
     docs = load_corpus(CORPUS)
     chunks = split_documents(docs, chunk_size=500, chunk_overlap=100)
-    too_large = [c for c in chunks if len(c.text) > 600]
+
+    too_large = [chunk for chunk in chunks if len(chunk.text) > 600]
     assert not too_large, f"chunks demasiado grandes: {len(too_large)}"
