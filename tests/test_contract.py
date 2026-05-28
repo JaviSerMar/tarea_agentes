@@ -1,39 +1,20 @@
-"""Tests del contrato y de las salvaguardas del agente DNI.
+"""Tests del contrato de entrada conectado a la arquitectura hexagonal.
 
-No llamamos a Ollama: sustituimos ``retrieve`` y ``generate`` por datos
-controlados para verificar el formato de salida y la gestión de contradicciones.
+No llaman a Ollama ni a ChromaDB: se sustituye el servicio construido por
+``consultar.py`` por un servicio falso que devuelve respuestas controladas.
 """
 
 from __future__ import annotations
 
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
-from agente_rag.generator import Generation
-from agente_rag.retriever import RetrievedChunk
+from agente_rag.domain.entities import Answer, Chunk, GenerationMetrics, Question
 
 CONTRACT_KEYS = {"respuesta", "fuentes", "chunks", "metricas", "trazas"}
 
 
-def _fake_retrieved() -> list[RetrievedChunk]:
-    return [
-        RetrievedChunk(
-            source="08_preguntas_basicas.txt",
-            text=(
-                "Q: ¿Qué es DNI?\n"
-                "A: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes "
-                "voluntarios en Valencia."
-            ),
-            score=1.0,
-            chunk_id="08_preguntas_basicas.txt__chunk_0000",
-        )
-    ]
-
-
-def _fake_generation(
-    text: str = "DNI es una asociación de jóvenes voluntarios en Valencia.",
-) -> Generation:
-    return Generation(
-        text=text,
+def _fake_metrics() -> GenerationMetrics:
+    return GenerationMetrics(
         prompt_tokens=420,
         output_tokens=37,
         tokens_per_sec=42.1,
@@ -42,95 +23,126 @@ def _fake_generation(
     )
 
 
+def _dni_chunk() -> Chunk:
+    return Chunk(
+        source="08_preguntas_basicas.txt",
+        text=(
+            "Q: ¿Qué es DNI?\n"
+            "A: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes "
+            "voluntarios en Valencia."
+        ),
+        score=1.0,
+        chunk_id="08_preguntas_basicas.txt__chunk_0000",
+    )
+
+
+def _fake_answer(
+    *,
+    text: str = "DNI es una asociación de jóvenes voluntarios en Valencia.",
+    sources: list[str] | None = None,
+    chunks: list[Chunk] | None = None,
+    conversation_id: str | None = None,
+) -> Answer:
+    selected_chunks = chunks if chunks is not None else [_dni_chunk()]
+    selected_sources = (
+        sources if sources is not None else ["08_preguntas_basicas.txt"]
+    )
+
+    return Answer(
+        text=text,
+        sources=selected_sources,
+        chunks=selected_chunks,
+        metrics=_fake_metrics(),
+        traces=None,
+        conversation_id=conversation_id,
+    )
+
+
+def _fake_service(answer: Answer) -> Mock:
+    service = Mock()
+    service.answer.return_value = answer
+    return service
+
+
 def test_consultar_signature_and_keys():
     import consultar
 
-    with patch(
-        "agente_rag.pipeline.retrieve",
-        return_value=_fake_retrieved(),
-    ), patch(
-        "agente_rag.pipeline.generate",
-        return_value=_fake_generation(),
-    ):
-        out = consultar.consultar("¿Qué es DNI?")
+    service = _fake_service(_fake_answer())
 
-    assert set(out.keys()) >= CONTRACT_KEYS, (
-        f"faltan claves: {CONTRACT_KEYS - set(out.keys())}"
-    )
-    assert isinstance(out["respuesta"], str) and out["respuesta"]
-    assert isinstance(out["fuentes"], list)
-    assert all(isinstance(source, str) for source in out["fuentes"])
-    assert isinstance(out["chunks"], list)
-    assert isinstance(out["metricas"], dict)
+    with patch("consultar.build_chatbot_service", return_value=service):
+        output = consultar.consultar("¿Qué es DNI?")
+
+    assert set(output.keys()) >= CONTRACT_KEYS
+    assert isinstance(output["respuesta"], str) and output["respuesta"]
+    assert isinstance(output["fuentes"], list)
+    assert all(isinstance(source, str) for source in output["fuentes"])
+    assert isinstance(output["chunks"], list)
+    assert isinstance(output["metricas"], dict)
+
+    submitted_question = service.answer.call_args.args[0]
+    assert isinstance(submitted_question, Question)
+    assert submitted_question.text == "¿Qué es DNI?"
 
 
 def test_consultar_accepts_conversation_id():
     import consultar
 
-    with patch(
-        "agente_rag.pipeline.retrieve",
-        return_value=_fake_retrieved(),
-    ), patch(
-        "agente_rag.pipeline.generate",
-        return_value=_fake_generation(),
-    ):
-        out = consultar.consultar("¿Qué es DNI?", conversation_id="conv-42")
+    service = _fake_service(_fake_answer(conversation_id="conv-42"))
 
-    assert out["conversation_id"] == "conv-42"
+    with patch("consultar.build_chatbot_service", return_value=service):
+        output = consultar.consultar("¿Qué es DNI?", conversation_id="conv-42")
+
+    submitted_question = service.answer.call_args.args[0]
+
+    assert submitted_question.conversation_id == "conv-42"
+    assert output["conversation_id"] == "conv-42"
 
 
-def test_fuentes_are_unique_and_preserve_order():
+def test_consultar_serializes_sources_preserving_domain_order():
     import consultar
 
     chunks = [
-        RetrievedChunk(
+        Chunk(
             source="08_preguntas_basicas.txt",
             text="Información general sobre DNI.",
             score=0.9,
             chunk_id="a",
         ),
-        RetrievedChunk(
+        Chunk(
             source="04_filosofia_dni.txt",
             text="Filosofía de DNI.",
             score=0.8,
             chunk_id="b",
         ),
-        RetrievedChunk(
-            source="08_preguntas_basicas.txt",
-            text="Más información general sobre DNI.",
-            score=0.7,
-            chunk_id="c",
-        ),
     ]
 
-    with patch(
-        "agente_rag.pipeline.retrieve",
-        return_value=chunks,
-    ), patch(
-        "agente_rag.pipeline.generate",
-        return_value=_fake_generation(),
-    ):
-        out = consultar.consultar("¿Cuál es la filosofía de DNI?")
+    service = _fake_service(
+        _fake_answer(
+            sources=["08_preguntas_basicas.txt", "04_filosofia_dni.txt"],
+            chunks=chunks,
+        )
+    )
 
-    assert out["fuentes"] == [
+    with patch("consultar.build_chatbot_service", return_value=service):
+        output = consultar.consultar("¿Cuál es la filosofía de DNI?")
+
+    assert output["fuentes"] == [
         "08_preguntas_basicas.txt",
         "04_filosofia_dni.txt",
     ]
+    assert output["chunks"][0]["source"] == "08_preguntas_basicas.txt"
+    assert output["chunks"][1]["source"] == "04_filosofia_dni.txt"
 
 
 def test_metricas_have_banda7_fields():
     import consultar
 
-    with patch(
-        "agente_rag.pipeline.retrieve",
-        return_value=_fake_retrieved(),
-    ), patch(
-        "agente_rag.pipeline.generate",
-        return_value=_fake_generation(),
-    ):
-        out = consultar.consultar("¿Qué es DNI?")
+    service = _fake_service(_fake_answer())
 
-    metricas = out["metricas"]
+    with patch("consultar.build_chatbot_service", return_value=service):
+        output = consultar.consultar("¿Qué es DNI?")
+
+    metricas = output["metricas"]
 
     for key in ("prompt_tokens", "output_tokens", "tokens_per_sec", "latencia_s"):
         assert key in metricas, f"falta métrica {key!r}"
@@ -140,11 +152,11 @@ def test_metricas_have_banda7_fields():
     assert metricas["modelo"] == "qwen2.5:3b"
 
 
-def test_multiple_exact_answers_show_all_versions():
+def test_consultar_serializes_validated_contradictory_answer():
     import consultar
 
-    contradictory_chunks = [
-        RetrievedChunk(
+    chunks = [
+        Chunk(
             source="01_faq_dni.txt",
             text=(
                 "Q: ¿A qué hora son los desayunos solidarios?\n"
@@ -153,7 +165,7 @@ def test_multiple_exact_answers_show_all_versions():
             score=1.0,
             chunk_id="faq_horario",
         ),
-        RetrievedChunk(
+        Chunk(
             source="11_horarios_ubicaciones.txt",
             text=(
                 "Q: ¿A qué hora son los desayunos solidarios?\n"
@@ -164,21 +176,28 @@ def test_multiple_exact_answers_show_all_versions():
         ),
     ]
 
-    with patch(
-        "agente_rag.pipeline.retrieve",
-        return_value=contradictory_chunks,
-    ), patch(
-        "agente_rag.pipeline.generate",
-        return_value=_fake_generation("Los desayunos son a las 8 de la mañana."),
-    ):
-        out = consultar.consultar("¿A qué hora son los desayunos solidarios?")
+    validated_text = (
+        "Las fuentes contienen varias versiones para esta pregunta:\n"
+        "- Según 01_faq_dni.txt: Los desayunos son a las 8 de la mañana.\n"
+        "- Según 11_horarios_ubicaciones.txt: Los desayunos suelen realizarse "
+        "entre las 9:00 y las 12:00h."
+    )
 
-    assert "varias versiones" in out["respuesta"]
-    assert "8 de la mañana" in out["respuesta"]
-    assert "9:00" in out["respuesta"]
-    assert "01_faq_dni.txt" in out["respuesta"]
-    assert "11_horarios_ubicaciones.txt" in out["respuesta"]
-    assert out["fuentes"] == [
+    service = _fake_service(
+        _fake_answer(
+            text=validated_text,
+            sources=["01_faq_dni.txt", "11_horarios_ubicaciones.txt"],
+            chunks=chunks,
+        )
+    )
+
+    with patch("consultar.build_chatbot_service", return_value=service):
+        output = consultar.consultar("¿A qué hora son los desayunos solidarios?")
+
+    assert "varias versiones" in output["respuesta"]
+    assert "8 de la mañana" in output["respuesta"]
+    assert "9:00" in output["respuesta"]
+    assert output["fuentes"] == [
         "01_faq_dni.txt",
         "11_horarios_ubicaciones.txt",
     ]

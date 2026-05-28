@@ -16,21 +16,41 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-from agente_rag.pipeline import answer  # noqa: E402
-
+from agente_rag.composition import build_chatbot_service  # noqa: E402
+from agente_rag.domain.entities import Question  # noqa: E402
 
 def consultar(pregunta: str, conversation_id: str | None = None) -> dict:
-    """Función obligatoria del contrato (enunciado §9, opción A).
+    """Función obligatoria del contrato, conectada al dominio hexagonal."""
+    service = build_chatbot_service()
+    answer = service.answer(
+        Question(text=pregunta, conversation_id=conversation_id)
+    )
 
-    Args:
-        pregunta: pregunta en lenguaje natural.
-        conversation_id: opcional; útil si en el futuro se añade memoria.
+    metrics = answer.metrics
 
-    Returns:
-        Dict con las claves: ``respuesta``, ``fuentes``, ``chunks``,
-        ``metricas``, ``trazas``. Ver ``docs/CONTRACT.md``.
-    """
-    return answer(pregunta, conversation_id=conversation_id)
+    return {
+        "respuesta": answer.text,
+        "fuentes": answer.sources,
+        "chunks": [
+            {
+                "source": chunk.source,
+                "text": chunk.text,
+                "score": chunk.score,
+            }
+            for chunk in answer.chunks
+        ],
+        "metricas": {
+            "prompt_tokens": metrics.prompt_tokens,
+            "output_tokens": metrics.output_tokens,
+            "tokens_per_sec": metrics.tokens_per_sec,
+            "latencia_s": metrics.latency_s,
+            "modelo": metrics.model,
+        }
+        if metrics is not None
+        else None,
+        "trazas": answer.traces,
+        "conversation_id": answer.conversation_id,
+    }
 
 
 def _main(argv: list[str]) -> int:
