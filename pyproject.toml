@@ -20,6 +20,8 @@ dependencies = [
     "fastapi>=0.110",
     "uvicorn[standard]>=0.29",
     "python-dotenv>=1.0",
+    "faiss-cpu>=1.8",
+    "sentence-transformers>=3.0",
 ]
 
 [project.optional-dependencies]
