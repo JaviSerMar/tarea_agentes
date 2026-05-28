@@ -1,53 +1,86 @@
 [
   {
-    "id": "q1",
-    "categoria": "asignaturas",
-    "pregunta": "¿Hay alguna asignatura sobre desarrollo de videojuegos en GTI?",
-    "fuentes_esperadas": ["3_tercero.txt", "4_cuarto.txt"]
+    "id": "q01",
+    "categoria": "definicion",
+    "pregunta": "¿Qué es DNI?",
+    "fuentes_esperadas": ["08_preguntas_basicas.txt"],
+    "respuesta_referencia": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que desarrolla proyectos sociales como desayunos solidarios, RESIS y COLES."
   },
   {
-    "id": "q2",
-    "categoria": "asignaturas",
-    "pregunta": "¿En qué consiste la asignatura de Diseño de Interfaces y Experiencia de Usuario?",
-    "fuentes_esperadas": ["3_tercero.txt"]
+    "id": "q02",
+    "categoria": "parafrasis",
+    "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+    "fuentes_esperadas": ["08_preguntas_basicas.txt", "04_filosofia_dni.txt"],
+    "respuesta_referencia": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\": detenerse, mirar con empatía y actuar ayudando de forma directa."
   },
   {
-    "id": "q3",
-    "categoria": "asignaturas",
-    "pregunta": "¿Qué se da en la asignatura de Tratamiento Digital de Imagen?",
-    "fuentes_esperadas": ["3_tercero.txt"]
+    "id": "q03",
+    "categoria": "desayunos",
+    "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+    "fuentes_esperadas": ["01_faq_dni.txt"],
+    "respuesta_referencia": "Los voluntarios se dividen en equipos y recorren zonas de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo también conversación y compañía."
   },
   {
-    "id": "q4",
-    "categoria": "primer_curso",
-    "pregunta": "¿Qué asignaturas de primero introducen a la programación?",
-    "fuentes_esperadas": ["1_primero.txt"]
+    "id": "q04",
+    "categoria": "desayunos",
+    "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+    "fuentes_esperadas": ["01_faq_dni.txt"],
+    "respuesta_referencia": "El punto de encuentro para desayunos es la Porta de la Mar de Valencia."
   },
   {
-    "id": "q5",
-    "categoria": "consejo",
-    "pregunta": "Mi hijo quiere ser diseñador de videojuegos, ¿le sirve este grado?",
-    "fuentes_esperadas": ["3_tercero.txt", "4_cuarto.txt"]
+    "id": "q05",
+    "categoria": "contradiccion",
+    "pregunta": "¿A qué hora son los desayunos solidarios?",
+    "fuentes_esperadas": ["01_faq_dni.txt", "11_horarios_ubicaciones.txt"],
+    "respuesta_referencia": "Las fuentes contienen versiones distintas: 01_faq_dni.txt indica las 8:00 de la mañana, mientras que 11_horarios_ubicaciones.txt indica normalmente entre las 9:00 y las 12:00 h."
   },
   {
-    "id": "q6",
-    "categoria": "trampa_retrieval",
-    "pregunta": "¿Qué se da en la asignatura de Inteligencia Artificial?",
-    "fuentes_esperadas": ["3_tercero.txt"],
-    "nota": "Caso conocido: el retrieval semántico se distrae con 'Visión Artificial'. Documentado en el Colab §10."
+    "id": "q06",
+    "categoria": "coles",
+    "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+    "fuentes_esperadas": ["01_faq_dni.txt", "06_coles_refuerzo.txt"],
+    "respuesta_referencia": "En el refuerzo escolar se ayuda a niños que viven realidades difíciles mediante repaso, deberes, lectura de cuentos o manualidades según su edad."
   },
   {
-    "id": "q7",
+    "id": "q07",
+    "categoria": "coles",
+    "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+    "fuentes_esperadas": ["01_faq_dni.txt", "06_coles_refuerzo.txt"],
+    "respuesta_referencia": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia."
+  },
+  {
+    "id": "q08",
+    "categoria": "coles",
+    "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+    "fuentes_esperadas": ["01_faq_dni.txt"],
+    "respuesta_referencia": "Para empezar en el refuerzo escolar es indispensable tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario."
+  },
+  {
+    "id": "q09",
+    "categoria": "resis",
+    "pregunta": "¿Dónde está la residencia La Acollida?",
+    "fuentes_esperadas": ["01_faq_dni.txt"],
+    "respuesta_referencia": "La residencia La Acollida está cerca de Blasco Ibáñez, en la calle Crevillente 22."
+  },
+  {
+    "id": "q10",
+    "categoria": "resis",
+    "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+    "fuentes_esperadas": ["01_faq_dni.txt"],
+    "respuesta_referencia": "La actividad con abuelitos se realiza los miércoles de 17:30 a 18:30."
+  },
+  {
+    "id": "q11",
     "categoria": "fuera_de_ambito",
-    "pregunta": "¿Hay alguna asignatura sobre cocina creativa?",
+    "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
     "fuentes_esperadas": [],
-    "respuesta_esperada": "No tengo esa información en mis fuentes"
+    "respuesta_referencia": "No tengo esa información en mis fuentes."
   },
   {
-    "id": "q8",
+    "id": "q12",
     "categoria": "fuera_de_ambito",
-    "pregunta": "¿Cuánto cuesta el alquiler en Valencia?",
+    "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
     "fuentes_esperadas": [],
-    "respuesta_esperada": "No tengo esa información en mis fuentes"
+    "respuesta_referencia": "No tengo esa información en mis fuentes."
   }
 ]
