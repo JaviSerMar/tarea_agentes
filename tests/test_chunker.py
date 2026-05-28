@@ -54,9 +54,28 @@ def test_split_documents_preserves_source():
     )
 
 
-def test_split_documents_chunk_size_bounded():
+def test_split_documents_preserves_qa_pairs():
     docs = load_corpus(CORPUS)
     chunks = split_documents(docs, chunk_size=500, chunk_overlap=100)
 
-    too_large = [chunk for chunk in chunks if len(chunk.text) > 600]
-    assert not too_large, f"chunks demasiado grandes: {len(too_large)}"
+    what_is_dni = [
+        chunk
+        for chunk in chunks
+        if "¿Qué es DNI?" in chunk.text
+    ]
+
+    assert len(what_is_dni) == 1
+    assert "DNI (Damos Nuestra Ilusión) es una asociación" in what_is_dni[0].text
+    assert what_is_dni[0].source == "08_preguntas_basicas.txt"
+
+
+def test_narrative_chunks_keep_size_bounded():
+    docs = load_corpus(CORPUS)
+    chunks = split_documents(docs, chunk_size=500, chunk_overlap=100)
+
+    narrative_chunks = [
+        chunk for chunk in chunks if not chunk.text.lstrip().startswith("Q:")
+    ]
+    too_large = [chunk for chunk in narrative_chunks if len(chunk.text) > 600]
+
+    assert not too_large, f"chunks narrativos demasiado grandes: {len(too_large)}"
