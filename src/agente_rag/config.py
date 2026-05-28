@@ -37,6 +37,10 @@ class Settings:
     api_host: str
     api_port: int
     corpus_dir: Path
+    llm_provider: str
+    poligpt_base_url: str
+    poligpt_api_key: str | None
+    poligpt_model: str
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -51,6 +55,13 @@ class Settings:
             api_host=os.getenv("API_HOST", "127.0.0.1"),
             api_port=int(os.getenv("API_PORT", "8000")),
             corpus_dir=Path(os.getenv("CORPUS_DIR", str(repo_root / "corpus"))),
+            llm_provider=os.getenv("LLM_PROVIDER", "ollama").strip().lower(),
+            poligpt_base_url=os.getenv(
+                "POLIGPT_BASE_URL",
+                "https://api.poligpt.upv.es/v1",
+            ),
+            poligpt_api_key=os.getenv("POLIGPT_API_KEY"),
+            poligpt_model=os.getenv("POLIGPT_MODEL", "poligpt"),
         )
 
 
