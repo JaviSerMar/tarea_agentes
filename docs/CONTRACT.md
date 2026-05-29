@@ -1,83 +1,133 @@
-# Contrato de interfaz
+# Contrato de interfaz — Agente RAG DNI
 
-Especificación operativa del contrato del enunciado §9. **Si esto se rompe,
-el corrector no puede evaluar y la nota es 0** (enunciado §9.1).
+## Opción utilizada
 
-## Opción A — módulo Python (esta es la que usa este repo)
-
-`consultar.py` debe exponer en la raíz del repositorio:
+La entrega utiliza la **opción A: módulo Python**. El fichero `consultar.py`, situado en la raíz del repositorio, expone la función que utilizará el corrector:
 
 ```python
-def consultar(pregunta: str,
-              conversation_id: str | None = None) -> dict:
+def consultar(pregunta: str, conversation_id: str | None = None) -> dict:
     ...
 ```
 
-Y la salida debe tener exactamente estas claves (algunas opcionales):
+Esta elección se declara en `features.json`:
 
 ```json
 {
-  "respuesta": "string — texto de la respuesta",
-  "fuentes": ["lista", "de", "nombres", "de", "archivo"],
+  "interfaz": "modulo_python",
+  "modulo": "consultar.py",
+  "endpoint_http": null,
+  "arquitectura": "hexagonal"
+}
+```
+
+## Formato de salida
+
+La función devuelve un diccionario con la siguiente estructura:
+
+```json
+{
+  "respuesta": "Texto generado a partir de las fuentes recuperadas.",
+  "fuentes": [
+    "08_preguntas_basicas.txt"
+  ],
   "chunks": [
-    {"source": "1_primero.txt", "text": "...", "score": 0.84}
+    {
+      "source": "08_preguntas_basicas.txt",
+      "text": "Q: ¿Qué es DNI? A: DNI (Damos Nuestra Ilusión)...",
+      "score": 1.0
+    }
   ],
   "metricas": {
-    "prompt_tokens": 612,
-    "output_tokens": 45,
-    "tokens_per_sec": 38.2,
-    "latencia_s": 1.7,
-    "modelo": "gemma2:27b"
+    "prompt_tokens": 359,
+    "output_tokens": 98,
+    "tokens_per_sec": 142.84,
+    "latencia_s": 3.2,
+    "modelo": "qwen2.5:3b"
   },
   "trazas": null
 }
 ```
 
-| Clave | Tipo | Banda | Notas |
-|---|---|---|---|
-| `respuesta` | `str` | 5 | No vacía. Si la pregunta es fuera de ámbito, contiene literalmente "No tengo esa información en mis fuentes". |
-| `fuentes` | `list[str]` | 6 | Nombres de archivo del corpus (sin ruta). Únicos, en orden de aparición. |
-| `chunks` | `list[dict]` o `null` | 7 | Cada chunk con `source`, `text`, `score`. |
-| `metricas` | `dict` o `null` | 7 | 4 campos mínimos: `prompt_tokens`, `output_tokens`, `tokens_per_sec`, `latencia_s`. |
-| `trazas` | `list[dict]` o `null` | opcional | No usado en este repo. Reservado para banda 8+ si queréis dejar log de RAGAs. |
+## Campos devueltos
 
-## Opción B — endpoint HTTP
+|    Clave    |         Tipo         |                                     Uso                                     |
+|-------------|----------------------|-----------------------------------------------------------------------------|
+| `respuesta` |         `str`        | Respuesta final del agente.                                                 |
+| `fuentes`   |      `list[str]`     | Archivos del corpus recuperados y utilizados para fundamentar la respuesta. |
+| `chunks`    |     `list[dict]`     | Fragmentos recuperados, con fuente, texto y score.                          |
+| `metricas`  |        `dict`        | Tokens, velocidad de generación, latencia y modelo empleado.                |
+| `trazas`    | `list[dict] \| None` | Campo opcional reservado para trazas internas.                              |
 
-`api.py` expone `POST /query` con cuerpo:
+## Comportamiento ante preguntas fuera de ámbito
 
-```json
-{ "pregunta": "...", "conversation_id": "...", "k": 5 }
+Cuando la información solicitada no está en el corpus DNI, el agente devuelve la frase anti-alucinación:
+
+```text
+No tengo esa información en mis fuentes.
 ```
 
-y devuelve el mismo JSON que la opción A.
+Ejemplo:
 
-Si elegís esta opción, en `features.json`:
-
-```json
-{
-  "interfaz": "endpoint_http",
-  "endpoint_http": "http://127.0.0.1:8000/query"
-}
+```python
+consultar("¿Cuánto cuesta alquilar un piso en Valencia?")
 ```
 
-## Cómo el corrector verifica el contrato (resumen)
+Resultado esperado en `respuesta`:
 
-1. Abre `features.json`. Si no es JSON válido o no es un objeto → entrega
-   inválida.
-2. Mira `interfaz`. Si `modulo_python`, importa `consultar.consultar`. Si
-   `endpoint_http`, hace `POST` a la URL declarada.
-3. Para cada pregunta del set oficial (confidencial):
-   - Llama a la función / endpoint.
-   - Comprueba que la salida es `dict` y tiene al menos `respuesta` y `fuentes`.
-   - Verifica que la frase de rechazo aparece literalmente cuando toca.
-   - Si declaráis banda 7, verifica que `chunks` y `metricas` son no-nulos.
+```text
+No tengo esa información en mis fuentes.
+```
 
-## Errores frecuentes que invalidan la entrega
+## Comportamiento ante contradicciones del corpus
 
-- `consultar.py` en `src/` en vez de en la raíz.
-- Renombrar la función a `query`, `responder`, `chat`, ...
-- Devolver una lista en vez de un dict.
-- `features.json` con typo en `bandas_declaradas` (`banda_5` vs `banda5_pipeline_no_inventa`).
-- Importar el módulo provoca side-effects pesados (cargar el modelo entero):
-  el corrector tiene timeout. Cargad el índice y los modelos **dentro** de
-  la función, no al importar.
+Si los documentos recuperados contienen versiones distintas sobre un mismo dato, el agente no inventa una única respuesta. En su lugar, presenta las versiones disponibles y cita sus archivos fuente.
+
+Ejemplo:
+
+```python
+consultar("¿A qué hora son los desayunos solidarios?")
+```
+
+La respuesta debe reflejar que:
+
+- `01_faq_dni.txt` indica las 8:00.
+- `11_horarios_ubicaciones.txt` indica normalmente entre las 9:00 y las 12:00.
+
+## Relación con la arquitectura hexagonal
+
+Aunque el corrector entra por `consultar.py`, la lógica interna no está implementada como un script monolítico. El flujo es:
+
+```text
+consultar.py → composition.py → ChatbotService → ports → adapters
+```
+
+De esta forma:
+
+- `consultar.py` actúa como adapter de entrada;
+- `ChatbotService` contiene la lógica principal del dominio;
+- los ports definen contratos abstractos;
+- los adapters concretos permiten elegir Ollama o PoliGPT, FAISS o ChromaDB y distintos proveedores de embeddings.
+
+## Ejecución manual
+
+Con la configuración final local:
+
+```powershell
+python consultar.py "¿Qué es DNI?"
+python consultar.py "¿A qué hora son los desayunos solidarios?"
+python consultar.py "¿Cuánto cuesta alquilar un piso en Valencia?"
+```
+
+## Verificación mediante tests
+
+El contrato se comprueba mediante la batería de tests:
+
+```powershell
+python -m pytest -q
+```
+
+Resultado validado durante el desarrollo:
+
+```text
+54 tests correctos
+```

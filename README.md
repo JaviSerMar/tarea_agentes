@@ -1,125 +1,345 @@
-# Agente RAG — repo-ejemplo (caso GTI Orienta)
+# Agente RAG DNI — Asistente Inteligente de Conocimiento
 
-> Repo de **referencia** para la práctica del Asistente DNI de la asignatura
-> *Inteligencia Artificial* (3º GTI, UPV). **Léelo como ejemplo de cómo
-> entregar**, no como plantilla a forkear: el caso (GTI Orienta) es distinto
-> al que vais a entregar (DNI Valencia).
+Proyecto de la asignatura **Inteligencia Artificial** del Grado en Tecnologías Interactivas de la Universitat Politècnica de València.
 
-## ¿Por qué este repo es un ejemplo y no la solución?
+El sistema implementa un agente RAG capaz de responder preguntas sobre la asociación **DNI (Damos Nuestra Ilusión)** utilizando únicamente el corpus oficial proporcionado. El agente recupera información relevante, genera una respuesta fundamentada, cita los archivos fuente utilizados y rechaza preguntas cuya respuesta no aparece en sus fuentes.
 
-| Eje | Práctica oficial | Este repo |
-|---|---|---|
-| Caso | Asociación DNI Valencia | Orientación académica GTI |
-| Corpus | 16 `.txt` (se os entrega) | 4 `.txt` (uno por curso del grado GTI) |
-| Banda | Vosotros decidís hasta dónde llegáis | 5 + 6 + 7 implementadas, hexagonal **NO** |
+## Funcionalidades implementadas
 
-El **patrón** (chunking, embeddings, retrieval, prompt anti-alucinación,
-cita de fuentes, métricas) es el mismo. El **dominio** es distinto. Eso
-permite que copiéis la **estructura** sin copiar la **solución**.
+La solución implementa las bandas 5, 6, 7, 8 y 10 de la práctica:
 
-## Arranque en menos de 5 minutos
+- Pipeline RAG completo sobre los 16 documentos oficiales de DNI.
+- Rechazo anti-alucinación para preguntas fuera del corpus.
+- Cita de archivos fuente en cada respuesta.
+- Chunking adaptado a documentos narrativos y pares `Q:/A:`.
+- Retrieval híbrido: búsqueda semántica + BM25.
+- Gestión explícita de contradicciones reales del corpus.
+- Arquitectura hexagonal con dominio, ports y adapters.
+- Adapters intercambiables para LLM, embeddings y vector store.
+- Benchmark reproducible con cuatro modelos.
+- Evaluación RAGAs con cuatro métricas obligatorias.
+- Dos métricas propias justificadas para el dominio DNI.
+- Tests automatizados del dominio y de los adapters.
 
-```bash
-# 1. Clonar y entrar
-git clone <este-repo>
-cd agente-rag-gti
+## Modelo final seleccionado
 
-# 2. Instalar (Python 3.11+)
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+El modelo recomendado para la ejecución final del agente es:
 
-# 3. Tener Ollama corriendo y los dos modelos disponibles
-#    (en local. Para probar contra UPV ver .env.example)
-ollama pull gemma2:27b
-ollama pull nomic-embed-text
-
-# 4. Construir el índice (~ 30-90 s)
-python scripts/build_index.py
-
-# 5. Lanzar una consulta
-python consultar.py "¿Hay una asignatura sobre videojuegos en GTI?"
+```text
+qwen2.5:3b mediante Ollama local
 ```
 
-Salida (resumida):
+La elección se fundamenta en los resultados obtenidos:
+
+- `12/12` aciertos en la revisión manual del benchmark.
+- Mejor valor de `faithfulness` en RAGAs: `0.788889`.
+- Mejor valor de `answer_relevancy` en RAGAs: `0.638091`.
+- Funcionamiento completamente local, sin depender de VPN ni de un servicio remoto.
+
+`gemma3:27b` mediante PoliGPT queda como alternativa remota especialmente interesante cuando se prioriza la velocidad de respuesta.
+
+## Arquitectura
+
+La solución utiliza arquitectura hexagonal o **ports & adapters**. La lógica del agente se mantiene separada de las tecnologías externas, de forma que es posible cambiar el modelo generativo, el proveedor de embeddings o el vector store mediante configuración.
+
+```text
+                 consultar.py
+                      |
+                      v
+              composition.py
+                      |
+                      v
+              ChatbotService
+            dominio puro del RAG
+             /        |        \
+            v         v         v
+         LLMPort  RetrieverPort  Entidades
+            |         |
+     +------+--+   +--+----------------------+
+     |         |   |                         |
+ OllamaLLM  PoliGPTLLM   HybridRetriever / Semantic / BM25
+                             |
+                    +--------+--------+
+                    |                 |
+                 FAISS             ChromaDB
+```
+
+### Capas principales
+
+```text
+src/agente_rag/
+├── domain/
+│   ├── entities.py
+│   ├── ports.py
+│   └── chatbot_service.py
+├── adapters/
+│   ├── llm/
+│   │   ├── ollama_llm.py
+│   │   └── poligpt_llm.py
+│   ├── embeddings/
+│   │   ├── ollama_embeddings.py
+│   │   └── sentence_transformers_embeddings.py
+│   └── retriever/
+│       ├── semantic_retriever.py
+│       ├── bm25_retriever.py
+│       ├── hybrid_retriever.py
+│       ├── chroma_vector_store.py
+│       └── faiss_vector_store.py
+├── composition.py
+└── config.py
+```
+
+El flujo real de una consulta es:
+
+```text
+consultar.py → composition.py → ChatbotService → adapters configurados
+```
+
+## Pipeline RAG
+
+El agente realiza el siguiente proceso:
+
+1. Carga el corpus oficial DNI.
+2. Divide los documentos en chunks, conservando unidos los pares `Q:/A:` cuando procede.
+3. Genera embeddings locales mediante `nomic-embed-text`.
+4. Recupera información relevante utilizando FAISS y retrieval híbrido.
+5. Construye un prompt limitado al contexto recuperado.
+6. Genera la respuesta mediante el LLM configurado.
+7. Devuelve respuesta, fuentes, chunks y métricas.
+8. Si la pregunta está fuera del corpus, devuelve:
+
+```text
+No tengo esa información en mis fuentes.
+```
+
+Cuando el corpus contiene versiones contradictorias, como el horario de los desayunos solidarios, el agente presenta ambas versiones con sus archivos fuente en lugar de ocultar la contradicción.
+
+## Requisitos
+
+- Windows 10 o sistema compatible.
+- Python 3.11.
+- Ollama instalado y en ejecución.
+- Modelos Ollama necesarios:
+
+```powershell
+ollama pull qwen2.5:3b
+ollama pull llama3.2:3b
+ollama pull nomic-embed-text
+```
+
+Para utilizar PoliGPT fuera del campus se requiere conexión a la VPN de la UPV y una clave privada configurada únicamente en `.env`.
+
+## Instalación en Windows / PowerShell
+
+Desde la raíz del proyecto:
+
+```powershell
+python -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+Copia el fichero de configuración de ejemplo:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+El archivo `.env` es privado y no debe añadirse nunca a Git.
+
+## Configuración final recomendada
+
+La configuración final utilizada para el agente es:
+
+```env
+LLM_PROVIDER=ollama
+LLM_MODEL=qwen2.5:3b
+OLLAMA_URL=http://localhost:11434/api
+
+EMBEDDER_PROVIDER=ollama
+EMBED_MODEL=nomic-embed-text
+
+VECTOR_STORE_PROVIDER=faiss
+FAISS_PATH=./data/dni.index
+
+CORPUS_DIR=./corpus
+VERIFY_SSL=true
+```
+
+Los adapters permiten cambiar a PoliGPT, Sentence Transformers o ChromaDB mediante variables de entorno, sin modificar el dominio.
+
+## Construcción del índice FAISS
+
+Con el entorno virtual activo y Ollama funcionando:
+
+```powershell
+python scripts\build_hexagonal_index.py
+```
+
+La indexación real del corpus DNI genera 281 chunks y almacena el índice en:
+
+```text
+data/dni.index
+```
+
+## Ejecutar una consulta
+
+Ejemplo de pregunta directa:
+
+```powershell
+python consultar.py "¿Qué es DNI?"
+```
+
+Ejemplo de pregunta fuera de ámbito:
+
+```powershell
+python consultar.py "¿Cuánto cuesta alquilar un piso en Valencia?"
+```
+
+Ejemplo de contradicción presente en el corpus:
+
+```powershell
+python consultar.py "¿A qué hora son los desayunos solidarios?"
+```
+
+La función obligatoria expuesta para el corrector es:
+
+```python
+def consultar(pregunta: str, conversation_id: str | None = None) -> dict:
+    ...
+```
+
+La respuesta contiene:
 
 ```json
 {
-  "respuesta": "Sí. En 4º se imparte 'Desarrollo de Videojuegos' (4_cuarto.txt)...",
-  "fuentes": ["4_cuarto.txt", "3_tercero.txt"],
-  "chunks": [...],
-  "metricas": {"prompt_tokens": 612, "output_tokens": 45, "tokens_per_sec": 38.2, "latencia_s": 1.7, "modelo": "gemma2:27b"}
+  "respuesta": "Texto generado por el agente",
+  "fuentes": ["archivo_fuente.txt"],
+  "chunks": [],
+  "metricas": {},
+  "trazas": null
 }
 ```
 
-## Estructura del repositorio
+## Benchmark con cuatro modelos
 
-```
-agente-rag-gti/
-├── consultar.py          # CONTRATO §9 opción A (módulo Python)
-├── api.py                # CONTRATO §9 opción B (POST /query con FastAPI)
-├── features.json         # Declaración para el corrector — SIN ESTO LA NOTA ES 0
-├── GRUPO.md              # Plantilla equipo
-├── AI_USAGE.md           # Plantilla declaración de uso de IA
-├── corpus/               # 4 .txt (1º a 4º curso de GTI)
-├── src/agente_rag/       # Pipeline RAG modular (chunker, retriever, generator, ...)
-├── scripts/
-│   ├── build_index.py    # Construye índice ChromaDB persistente
-│   └── run_eval.py       # Ejecuta el benchmark
-├── tests/                # pytest sin dependencia de red (mocks de Ollama)
-├── benchmark/
-│   ├── preguntas.json    # 8 preguntas tipo (incluye 2 fuera-de-ámbito)
-│   └── README.md         # Cómo evaluar resultados
-├── docs/
-│   ├── ARCHITECTURE.md   # Decisiones de diseño y por qué
-│   └── CONTRACT.md       # Contrato de interfaz al detalle
-└── .github/workflows/ci.yml   # Tests + lint en cada push
+El benchmark utiliza 12 preguntas del dominio DNI, incluyendo preguntas factuales, logísticas, una contradicción real y dos preguntas fuera de ámbito.
+
+Modelos evaluados:
+
+| Proveedor | Modelo |
+|---|---|
+| Ollama local | `qwen2.5:3b` |
+| Ollama local | `llama3.2:3b` |
+| PoliGPT | `gemma3:27b` |
+| PoliGPT | `llama3.3:70b` |
+
+Durante la comparación se mantuvieron constantes el corpus, el chunking, el retrieval, los embeddings y el vector store. Solo se cambió el LLM generativo.
+
+Los resultados consolidados están disponibles en:
+
+```text
+benchmark/benchmark.json
+benchmark/benchmark.md
 ```
 
-## Bandas implementadas
+## Evaluación RAGAs y métricas propias
 
-- **Banda 5** ✓ — pipeline RAG con prompt anti-alucinación.
-- **Banda 6** ✓ — cada respuesta cita el archivo fuente.
-- **Banda 7** parcial — el contrato emite `chunks` y `metricas` (tokens,
-  tokens/s, latencia). **Falta** el benchmark con 4 modelos: lo dejamos a
-  los alumnos para que midan tradeoffs reales.
-- **Banda 8** — no implementada. Sería integrar RAGAs sobre los outputs
-  de `scripts/run_eval.py`.
-- **Banda 10** — *deliberadamente no implementada*. El reto del 10 es
-  refactorizar este single-agent a hexagonal (ver `manual_desarrollador_dni.pdf`
-  sección 4). Si os lo damos hecho, regalamos la nota máxima.
+Se han calculado las cuatro métricas RAGAs requeridas:
+
+- `faithfulness`
+- `answer_relevancy`
+- `context_precision`
+- `context_recall`
+
+Además, se han definido dos métricas propias:
+
+- `expected_source_coverage`: cobertura de archivos fuente esperados.
+- `out_of_scope_rejection_accuracy`: acierto al rechazar preguntas fuera del corpus.
+
+Resultados resumidos:
+
+| Modelo | Calidad manual | Faithfulness | Answer relevancy | Context precision | Context recall |
+|---|---:|---:|---:|---:|---:|
+| `qwen2.5:3b` | 12/12 | 0.788889 | 0.638091 | 0.669444 | 0.833333 |
+| `llama3.2:3b` | 10/12 | 0.716667 | 0.471928 | 0.669444 | 0.833333 |
+| `gemma3:27b` | 12/12 | 0.716667 | 0.612921 | 0.669444 | 0.833333 |
+| `llama3.3:70b` | 12/12 | 0.775463 | 0.582995 | 0.669444 | 0.833333 |
+
+Los resultados detallados se encuentran en:
+
+```text
+evaluacion/ragas_results.json
+evaluacion/metricas_propias.md
+```
 
 ## Tests
 
-```bash
-pytest -q
+La solución dispone de tests automatizados, incluidos tests del dominio sin dependencia de red y tests de adapters.
+
+Para ejecutarlos:
+
+```powershell
+python -m pytest -q
 ```
 
-Los tests **no llaman a Ollama**: parchean `retrieve` y `generate` con stubs
-para verificar que el contrato (`{respuesta, fuentes, chunks, metricas, trazas}`)
-se respeta y que el `features.json` declara coherentemente lo que entrega.
+Resultado actual:
 
-## Por qué este repo está bien estructurado (lo que queremos que copiéis)
+```text
+54 tests correctos
+```
 
-1. **Separación clara `src/` ↔ `consultar.py`/`api.py`**. La lógica vive en
-   el paquete, los puntos de entrada son finos. Si mañana queremos meter
-   un Streamlit (extra +1.5), es otro fichero más, no un refactor.
-2. **`features.json` válido y honesto**. Marca `true` solo lo que
-   funciona. Los alumnos que declaren `banda7=true` sin `benchmark/` se
-   detectan en el corrector.
-3. **Tests aislados de red**. CI corre en GitHub Actions sin Ollama.
-4. **Conventional commits granulares**. Mira `git log --oneline`: cada
-   commit toca una capa, no hay un commit-monstruo "lo subo todo".
-5. **Cita de fuentes literal en el prompt** (`prompts.py`). La banda 6 se
-   gana en el prompt, no en el postproceso.
+## Estructura principal del repositorio
 
-## Avisos legales y éticos
+```text
+pracAgentes/
+├── consultar.py
+├── features.json
+├── GRUPO.md
+├── AI_USAGE.md
+├── .env.example
+├── corpus/
+├── data/
+├── benchmark/
+│   ├── preguntas.json
+│   ├── benchmark.json
+│   ├── benchmark.md
+│   └── README.md
+├── evaluacion/
+│   ├── ragas_results.json
+│   └── metricas_propias.md
+├── docs/
+│   ├── ARCHITECTURE.md
+│   └── CONTRACT.md
+├── scripts/
+│   ├── build_hexagonal_index.py
+│   ├── build_benchmark_report.py
+│   ├── run_eval.py
+│   └── run_ragas_eval.py
+├── src/agente_rag/
+└── tests/
+```
 
-- Modelo y corpus son material docente. No lo redistribuyáis fuera del aula
-  sin autorización del profesor.
-- Si añadís `boto3`/AWS Rekognition, **rotad credenciales** después.
-  Ningún `.env` con secretos debe llegar a un repo público.
+## Seguridad y credenciales
 
-## Créditos
+- `.env` contiene configuración privada y nunca debe commitearse.
+- La clave de PoliGPT solo debe almacenarse en `.env`.
+- `.env.example` contiene únicamente valores de ejemplo seguros.
+- Los resultados entregados no incluyen credenciales.
 
-Vicente Rivas Monferrer & Juan M. Alberola — Universitat Politècnica de
-València, 2026.
+## Uso de inteligencia artificial
+
+El uso de ChatGPT durante el desarrollo, depuración y documentación se declara de forma honesta en:
+
+```text
+AI_USAGE.md
+```
+
+## Integrantes
+
+Los integrantes del grupo y su reparto de trabajo se documentan en:
+
+```text
+GRUPO.md
+```

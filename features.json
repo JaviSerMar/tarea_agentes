@@ -1,22 +1,39 @@
 {
-  "_": "Plantilla declarativa que el corrector lee primero. Marca true SOLO lo implementado de verdad. Declarar true sin implementar es trampa y penaliza (ver enunciado §9). Este repo-ejemplo declara las bandas que sí implementa: 5, 6 y 7.",
+  "_": "Declaración de capacidades realmente implementadas por el agente RAG DNI.",
   "interfaz": "modulo_python",
   "modulo": "consultar.py",
   "endpoint_http": null,
-  "arquitectura": "single_agent",
+  "arquitectura": "hexagonal",
   "bandas_declaradas": {
     "banda5_pipeline_no_inventa": true,
     "banda6_cita_archivo": true,
-    "banda7_benchmark_4_modelos": false,
-    "banda8_ragas_metricas_propias": false,
-    "banda10_hexagonal": false
+    "banda7_benchmark_4_modelos": true,
+    "banda8_ragas_metricas_propias": true,
+    "banda10_hexagonal": true
   },
   "extras_declarados": {
     "frontend": false,
     "aws_rekognition": false,
     "huggingface": false
   },
-  "modelos_evaluados_en_benchmark": [],
+  "modelos_evaluados_en_benchmark": [
+    {
+      "alias": "qwen2.5:3b",
+      "servidor": "ollama_local"
+    },
+    {
+      "alias": "llama3.2:3b",
+      "servidor": "ollama_local"
+    },
+    {
+      "alias": "gemma3:27b",
+      "servidor": "poligpt"
+    },
+    {
+      "alias": "llama3.3:70b",
+      "servidor": "poligpt"
+    }
+  ],
   "ollama_local_obligatorio": true,
   "verify_ssl_upv": false
 }

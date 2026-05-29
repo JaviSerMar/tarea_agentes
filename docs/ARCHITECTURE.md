@@ -1,100 +1,298 @@
-# Decisiones de arquitectura
+# Arquitectura del Agente RAG DNI
 
-> Documento corto que explica el **por qué** detrás de cada elección.
-> No describe **qué** hace cada fichero (eso lo cuenta el código y el
-> README). Aquí va lo que un alumno no puede deducir leyendo el árbol.
+## 1. Objetivo de la arquitectura
 
-## 1. Por qué single-agent y no hexagonal
+El sistema implementa un agente RAG para responder preguntas sobre la asociación DNI (Damos Nuestra Ilusión) utilizando únicamente el corpus oficial proporcionado.
 
-Este repo es **plantilla pedagógica**, no aspirante a banda 10. Si os
-diéramos la versión hexagonal terminada, regalaríamos los puntos del
-techo. El propio enunciado §13 deja el 10 como ejercicio del alumno.
+La solución se ha diseñado con **arquitectura hexagonal** o **ports & adapters**, con el objetivo de separar la lógica del agente de las tecnologías externas utilizadas para generar respuestas, producir embeddings o almacenar vectores.
 
-A cambio, este repo deja **muy claro qué refactorizar**:
+Esta separación permite:
 
-- `src/agente_rag/embedder.py`, `retriever.py`, `generator.py` ya están
-  separados como módulos — son los **futuros adapters**.
-- `src/agente_rag/pipeline.py` es el **futuro `domain/chatbot_service.py`**.
-- `src/agente_rag/config.py` es la **semilla del composition root**.
+- cambiar de Ollama a PoliGPT sin modificar el dominio;
+- cambiar entre FAISS y ChromaDB mediante configuración;
+- intercambiar el proveedor de embeddings;
+- probar la lógica principal mediante dobles de prueba sin depender de red ni de modelos reales.
 
-La diferencia con un hexagonal real está en las dependencias: ahora
-`pipeline.py` *importa* `retriever` y `generator` directamente (acoplamiento
-hacia adapters concretos). En hexagonal, `pipeline.py` recibiría dos
-**ports** por constructor y no sabría si detrás hay Ollama o un fake.
+## 2. Flujo general de una consulta
 
-## 2. Por qué ChromaDB persistente y no in-memory como el Colab
+El flujo real de ejecución es:
 
-El Colab usa `chromadb.Client()` (in-memory) porque cada celda se ejecuta en
-una sesión efímera. En vuestro repo el examinador clona, indexa **una vez**,
-y luego hace múltiples preguntas. Reembedar 4 × 27 chunks cada vez son ~30 s
-extra que **se pagan en la oral** delante del profesor. Con
-`PersistentClient(path=...)` el segundo arranque cae a < 2 s.
+```text
+consultar.py
+    ↓
+composition.py
+    ↓
+ChatbotService
+    ↓
+RetrieverPort + LLMPort
+    ↓
+Adapters configurados
+```
 
-Coste: el directorio `data/chroma/` está en `.gitignore`. **Hay que regenerarlo**
-en cada portátil — ese es justo el comando que probaréis en el oral
-(`python scripts/build_index.py`).
+El proceso completo es:
 
-## 3. Por qué `nomic-embed-text` y no sentence-transformers
+1. El usuario formula una pregunta mediante `consultar.py`.
+2. El composition root construye los adapters definidos en la configuración.
+3. El retriever recupera chunks relevantes del corpus DNI.
+4. El servicio de dominio analiza el contexto recuperado.
+5. Si la pregunta está fuera del ámbito del corpus, el sistema devuelve el rechazo anti-alucinación.
+6. Si existe una contradicción relevante entre fuentes, se presentan ambas versiones citadas.
+7. En los demás casos, se construye un prompt restringido al contexto y se invoca el LLM.
+8. Se devuelve la respuesta junto con fuentes, chunks y métricas.
 
-`nomic-embed-text` viene en el catálogo de Ollama UPV → un único endpoint
-para LLM y embeddings. Una sola dependencia (`requests`), un solo timeout
-para configurar, un solo error para diagnosticar.
+## 3. Capas de la solución
 
-`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` es alternativa
-válida y **funciona sin red** (descarga el modelo una vez). Lo dejamos
-documentado en `manual_desarrollador.pdf §1.2` como opción si Ollama UPV
-está caído.
+### 3.1. Entrada
 
-## 4. Por qué chunk_size=500 / overlap=100
+El punto de entrada obligatorio para el corrector es:
 
-Es el "sweet spot" del Colab §3 para texto en español:
+```text
+consultar.py
+```
 
-- 100: pierde contexto, recupera trozos inconexos.
-- 2000: el embedding se diluye y el prompt se infla.
-- 500/100: un chunk típico es un párrafo o medio. Suficiente para que el
-  retrieval semántico distinga "Inteligencia Artificial" de "Visión Artificial"
-  por contexto, no por nombre.
+Este fichero expone la función:
 
-Si vuestro retrieval falla, **lo primero a tocar son estos dos números**.
+```python
+def consultar(pregunta: str, conversation_id: str | None = None) -> dict:
+    ...
+```
 
-## 5. Por qué `score = 1 - distance` en `retriever.py`
+`consultar.py` no contiene la lógica principal del agente: actúa como adapter de entrada y delega en la configuración y el servicio de dominio.
 
-ChromaDB devuelve **distancias** (más bajo = más cercano). El contrato del
-enunciado y el lenguaje natural del informe esperan **scores** (más alto =
-mejor match). Hacemos la conversión una sola vez en el adapter para que el
-dominio razone siempre en "score" y no en "distance".
+### 3.2. Dominio
 
-## 6. Por qué `verify_ssl=False` SOLO contra UPV
+El dominio contiene la lógica independiente de infraestructura:
 
-El endpoint Ollama UPV usa cert autofirmado: con `verify=True` falla la
-handshake. Con `verify=False` el handshake pasa pero **se desactivan las
-comprobaciones de identidad** — cualquier MITM en la red podría suplantar
-el endpoint. Es asumible **dentro de la red UPV**, no en general. Por eso
-el default en `.env.example` es `VERIFY_SSL=true` y solo se baja en el
-caso documentado.
+```text
+src/agente_rag/domain/
+├── entities.py
+├── ports.py
+└── chatbot_service.py
+```
 
-## 7. Por qué los tests no llaman a Ollama
+Responsabilidades principales:
 
-Tres razones:
+- representar preguntas, respuestas y chunks;
+- definir los contratos que deben cumplir los adapters;
+- orquestar retrieval, prompt, respuesta y fuentes;
+- mantener la lógica principal desacoplada de Ollama, PoliGPT, FAISS o ChromaDB.
 
-1. **Reproducibilidad**: el CI no tiene acceso a Ollama. Si los tests
-   dependieran de la red, romperían en cada PR.
-2. **Velocidad**: un test que llama al LLM tarda 1-2 s. Con 50 tests, son
-   minutos. Con stubs, son milisegundos.
-3. **Cobertura del contrato sin coste de tokens**: lo importante es
-   verificar la **forma** del JSON de salida, no el contenido.
+### 3.3. Ports
 
-La validación E2E con Ollama real **se hace a mano**: `python scripts/run_eval.py`
-+ leer los outputs en `benchmark/runs/`. Eso es lo que el alumno presentará
-en el informe.
+Los ports definen las interfaces que el dominio necesita:
 
-## 8. Decisiones que NO tomamos a propósito
+- `LLMPort`: generación de respuestas mediante un modelo de lenguaje.
+- `EmbedderPort`: conversión de texto a embeddings.
+- `RetrieverPort`: recuperación de chunks relevantes.
+- Port de vector store: almacenamiento y búsqueda vectorial.
 
-- **No incluimos retrieval híbrido (BM25 + semántico)**. Está en
-  `requirements.txt` (`rank-bm25`) pero no se usa. Es el primer extra
-  natural para subir nota: añadir `bm25.py` y mezclar scores.
-- **No incluimos memoria conversacional**. El contrato acepta
-  `conversation_id` pero el pipeline no la usa. Otro extra abierto.
-- **No incluimos frontend**. El extra "frontend +1.5" se hace encima de
-  este repo, no dentro: añadid un `streamlit_app.py` que llame a
-  `consultar.consultar(...)`.
+El dominio depende de estos contratos, no de implementaciones concretas.
+
+### 3.4. Adapters
+
+Los adapters implementan las tecnologías externas:
+
+```text
+src/agente_rag/adapters/
+├── llm/
+│   ├── ollama_llm.py
+│   └── poligpt_llm.py
+├── embeddings/
+│   ├── ollama_embeddings.py
+│   └── sentence_transformers_embeddings.py
+└── retriever/
+    ├── semantic_retriever.py
+    ├── bm25_retriever.py
+    ├── hybrid_retriever.py
+    ├── chroma_vector_store.py
+    └── faiss_vector_store.py
+```
+
+Adapters disponibles:
+
+| Tipo | Implementaciones |
+|------|------------------|
+| LLM | Ollama, PoliGPT |
+| Embeddings | Ollama, Sentence Transformers |
+| Vector store | FAISS, ChromaDB |
+| Retrieval | Semántico, BM25, híbrido |
+
+### 3.5. Composition root y configuración
+
+La selección de adapters se realiza en:
+
+```text
+src/agente_rag/composition.py
+src/agente_rag/config.py
+```
+
+La configuración se controla mediante variables de entorno. La configuración final recomendada es:
+
+```env
+LLM_PROVIDER=ollama
+LLM_MODEL=qwen2.5:3b
+EMBEDDER_PROVIDER=ollama
+EMBED_MODEL=nomic-embed-text
+VECTOR_STORE_PROVIDER=faiss
+FAISS_PATH=./data/dni.index
+```
+
+Cambiar un adapter no requiere modificar el dominio, sino únicamente seleccionar otra configuración compatible.
+
+## 4. Recuperación de información
+
+### 4.1. Chunking adaptado al corpus DNI
+
+El corpus contiene documentos narrativos y documentos estructurados mediante pares `Q:/A:`. Para evitar pérdida de información, el agente conserva unidos esos pares cuando realiza el chunking.
+
+Esta decisión mejora especialmente preguntas frecuentes como:
+
+- qué es DNI;
+- horarios;
+- documentación necesaria;
+- ubicaciones de actividades.
+
+### 4.2. Retrieval híbrido
+
+El agente combina dos estrategias de recuperación:
+
+- **Búsqueda semántica**, basada en embeddings.
+- **BM25**, basada en coincidencia léxica.
+
+El retrieval híbrido mejora la robustez ante preguntas con términos exactos, nombres de ubicaciones o formulaciones similares a las preguntas frecuentes del corpus.
+
+### 4.3. Vector store final
+
+La configuración final utiliza **FAISS** como vector store persistente:
+
+```env
+VECTOR_STORE_PROVIDER=faiss
+FAISS_PATH=./data/dni.index
+```
+
+El índice se genera mediante:
+
+```powershell
+python scripts\build_hexagonal_index.py
+```
+
+Sobre el corpus oficial DNI se generaron 281 chunks.
+
+ChromaDB permanece implementado como alternativa intercambiable.
+
+## 5. Control de alucinaciones y contradicciones
+
+### 5.1. Preguntas fuera de ámbito
+
+Si el agente no encuentra información suficiente en sus fuentes, devuelve:
+
+```text
+No tengo esa información en mis fuentes.
+```
+
+Este comportamiento se ha validado mediante preguntas sobre alquileres y becas universitarias, ajenas al corpus DNI.
+
+### 5.2. Contradicciones reales del corpus
+
+El corpus contiene información contradictoria que no debe corregirse artificialmente. Por ejemplo, respecto al horario de desayunos solidarios:
+
+- `01_faq_dni.txt` indica las 8:00.
+- `11_horarios_ubicaciones.txt` indica normalmente entre las 9:00 y las 12:00.
+
+El agente muestra ambas versiones citando sus fuentes, evitando inventar una única respuesta definitiva.
+
+## 6. Benchmark y modelo seleccionado
+
+Se evaluaron cuatro modelos manteniendo constante todo el pipeline salvo el LLM generativo:
+
+| Proveedor | Modelo |
+|---|---|
+| Ollama local | `qwen2.5:3b` |
+| Ollama local | `llama3.2:3b` |
+| PoliGPT | `gemma3:27b` |
+| PoliGPT | `llama3.3:70b` |
+
+Los resultados completos están en:
+
+```text
+benchmark/benchmark.json
+benchmark/benchmark.md
+```
+
+Tras la revisión manual y la evaluación RAGAs, se selecciona:
+
+```text
+qwen2.5:3b mediante Ollama local
+```
+
+Motivos:
+
+- obtuvo 12/12 aciertos manuales;
+- alcanzó el mejor valor de `faithfulness`;
+- alcanzó el mejor valor de `answer_relevancy`;
+- funciona localmente sin depender de VPN ni de un servicio externo.
+
+## 7. Evaluación RAGAs y métricas propias
+
+La evaluación incluye las cuatro métricas requeridas:
+
+- `faithfulness`
+- `answer_relevancy`
+- `context_precision`
+- `context_recall`
+
+Además, se definieron dos métricas propias:
+
+- `expected_source_coverage`
+- `out_of_scope_rejection_accuracy`
+
+Los resultados se almacenan en:
+
+```text
+evaluacion/ragas_results.json
+evaluacion/metricas_propias.md
+```
+
+## 8. Tests y verificabilidad
+
+El proyecto dispone de 54 tests correctos:
+
+```powershell
+python -m pytest -q
+```
+
+Los tests del dominio utilizan adapters simulados o mocks, de modo que validan la lógica principal sin requerir red, VPN ni modelos remotos.
+
+Además, se han realizado validaciones reales con:
+
+- Ollama local;
+- PoliGPT mediante VPN UPV;
+- FAISS;
+- RAGAs como sistema de evaluación.
+
+## 9. Añadir un adapter nuevo
+
+Para incorporar un nuevo proveedor sin modificar el dominio:
+
+1. Crear una implementación compatible con el port correspondiente dentro de `src/agente_rag/adapters/`.
+2. Añadir la selección del nuevo adapter en `composition.py`.
+3. Añadir sus variables de configuración en `config.py` y `.env.example`.
+4. Crear tests unitarios del adapter y comprobar que el dominio sigue funcionando sin cambios.
+
+Por ejemplo, un nuevo vector store podría añadirse implementando el mismo contrato que cumplen FAISS y ChromaDB.
+
+## 10. Limitaciones y mejoras futuras
+
+Limitaciones actuales:
+
+- La evaluación RAGAs depende de PoliGPT y VPN UPV cuando se ejecuta fuera del campus.
+- La detección de contradicciones puede seguir mejorándose para distinguir contradicciones reales de información complementaria.
+- El agente no mantiene memoria conversacional entre consultas.
+- No se ha implementado interfaz gráfica, ya que no forma parte de las bandas declaradas.
+
+Mejoras futuras posibles:
+
+- añadir memoria conversacional controlada;
+- mejorar el reranking de chunks;
+- incluir una interfaz web;
+- ampliar el benchmark con más preguntas ambiguas y multi-documento.
