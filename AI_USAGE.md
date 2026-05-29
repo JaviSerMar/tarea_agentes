@@ -107,6 +107,21 @@ Ficheros modificados o revisados con apoyo de ChatGPT:
 * `AI USAGE.md`
 * documentación final, README principal y documentación técnica.
 
+### Frontend Streamlit e informe final
+
+ChatGPT ayudó a implementar y revisar el frontend Streamlit utilizado para la demostración oral, así como a actualizar la documentación asociada al extra declarado.
+
+Ficheros desarrollados o modificados con apoyo de ChatGPT:
+
+* `streamlit_app.py`
+* `requirements.txt`
+* `features.json`
+* `README.md`
+* `docs/INFORME.md`
+
+ChatGPT ayudó a redactar y reestructurar el informe fuente en Markdown (`docs/INFORME.md`). A partir de ese archivo, el equipo generó manualmente `informe.pdf` usando la extensión Markdown PDF de Visual Studio Code y revisó el resultado antes de incorporarlo a la entrega.
+
+
 ## Grado de revisión humana
 
 Todo el código y la documentación propuestos mediante ChatGPT han sido copiados, adaptados, ejecutados y revisados localmente por los estudiantes antes de incorporarlos al repositorio.
