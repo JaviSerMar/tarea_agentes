@@ -12,7 +12,7 @@
     "banda10_hexagonal": true
   },
   "extras_declarados": {
-    "frontend": false,
+    "frontend": true,
     "aws_rekognition": false,
     "huggingface": false
   },
