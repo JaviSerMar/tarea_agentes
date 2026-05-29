@@ -222,6 +222,47 @@ La respuesta contiene:
 }
 ```
 
+## Frontend Streamlit para la demostración
+
+Además de la interfaz obligatoria mediante `consultar.py`, el proyecto incluye un frontend mínimo funcional con Streamlit para facilitar la presentación oral del agente.
+
+La interfaz permite:
+
+- escribir una pregunta sobre DNI;
+- consultar el agente RAG usando la función `consultar`;
+- mostrar la respuesta generada;
+- visualizar las fuentes documentales utilizadas;
+- consultar las métricas de ejecución;
+- desplegar las evidencias recuperadas;
+- comprobar el rechazo de preguntas fuera de ámbito;
+- mostrar contradicciones reales del corpus, como los horarios de desayunos solidarios.
+
+Para iniciar la interfaz, con el entorno virtual activo y Ollama en ejecución:
+
+```powershell
+python -m streamlit run streamlit_app.py
+```
+
+Después, abrir en el navegador la URL local indicada por Streamlit, normalmente:
+
+```text
+http://localhost:8501
+```
+
+Consultas recomendadas para la demostración:
+
+```text
+¿Qué es DNI?
+¿A qué hora son los desayunos solidarios?
+¿Cuánto cuesta alquilar un piso en Valencia?
+```
+
+Este frontend es un adaptador de entrada adicional para demostración. No sustituye el contrato oficial de corrección, que sigue siendo la opción A mediante:
+
+```python
+from consultar import consultar
+```
+
 ## Benchmark con cuatro modelos
 
 El benchmark utiliza 12 preguntas del dominio DNI, incluyendo preguntas factuales, logísticas, una contradicción real y dos preguntas fuera de ámbito.
