@@ -13,7 +13,7 @@ Esta elección se declara en `features.json`:
 
 ```json
 {
-  "interfaz": "modulo_python",
+  "interfaz": "opcion_a",
   "modulo": "consultar.py",
   "endpoint_http": null,
   "arquitectura": "hexagonal"

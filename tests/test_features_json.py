@@ -14,16 +14,16 @@ def test_features_json_exists_and_is_object():
 
 def test_features_json_declares_consistent_interface():
     data = json.loads(FEATURES.read_text(encoding="utf-8"))
-    assert data["interfaz"] in {"modulo_python", "endpoint_http"}
+    assert data["interfaz"] in {"opcion_a", "opcion_b"}
 
-    if data["interfaz"] == "modulo_python":
+    if data["interfaz"] == "opcion_a":
         assert (FEATURES.parent / data["modulo"]).exists(), (
-            "interfaz=modulo_python pero el módulo declarado no existe"
+            "interfaz=opcion_a pero el módulo declarado no existe"
         )
         assert data["endpoint_http"] is None
     else:
         assert isinstance(data["endpoint_http"], str) and data["endpoint_http"], (
-            "interfaz=endpoint_http requiere endpoint_http no vacío"
+            "interfaz=opcion_b requiere endpoint_http no vacío"
         )
 
 

@@ -1,4 +1,4 @@
-"""Construye el índice vectorial desde corpus/.
+"""Construye el índice vectorial desde base_conocimiento/.
 
 Ejecución desde la raíz del repo:
     python scripts/build_index.py

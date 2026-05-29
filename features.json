@@ -1,6 +1,6 @@
 {
   "_": "Declaración de capacidades realmente implementadas por el agente RAG DNI.",
-  "interfaz": "modulo_python",
+  "interfaz": "opcion_a",
   "modulo": "consultar.py",
   "endpoint_http": null,
   "arquitectura": "hexagonal",

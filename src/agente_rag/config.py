@@ -59,7 +59,9 @@ class Settings:
             collection_name=os.getenv("COLLECTION_NAME", "dni"),
             api_host=os.getenv("API_HOST", "127.0.0.1"),
             api_port=int(os.getenv("API_PORT", "8000")),
-            corpus_dir=Path(os.getenv("CORPUS_DIR", str(repo_root / "corpus"))),
+            corpus_dir=Path(
+                os.getenv("CORPUS_DIR", str(repo_root / "base_conocimiento"))
+            ),
             llm_provider=os.getenv("LLM_PROVIDER", "ollama").strip().lower(),
             poligpt_base_url=os.getenv(
                 "POLIGPT_BASE_URL",

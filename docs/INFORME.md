@@ -220,7 +220,7 @@ EMBED_MODEL=nomic-embed-text
 VECTOR_STORE_PROVIDER=faiss
 FAISS_PATH=./data/dni.index
 
-CORPUS_DIR=./corpus
+CORPUS_DIR=./base_conocimiento
 VERIFY_SSL=true
 ```
 
