@@ -1,0 +1,870 @@
+{
+  "evaluation": "RAGAs y métricas propias para Agente RAG DNI",
+  "created_at": "2026-05-29T20:46:12",
+  "judge": {
+    "llm": "gemma3:27b",
+    "embeddings": "poligpt-embed-bge-m3",
+    "provider": "PoliGPT",
+    "note": "Estos modelos se usan solo como evaluadores; el pipeline RAG evaluado conserva FAISS y embeddings Ollama."
+  },
+  "ragas_metrics": {
+    "faithfulness": "Fidelidad de la respuesta al contexto recuperado.",
+    "answer_relevancy": "Relevancia de la respuesta respecto a la pregunta.",
+    "context_precision": "Utilidad de los chunks recuperados para responder.",
+    "context_recall": "Cobertura de la información necesaria en los chunks."
+  },
+  "metricas_propias": {
+    "expected_source_coverage": "Proporción de archivos fuente esperados que aparecen entre las fuentes recuperadas por el agente.",
+    "out_of_scope_rejection_accuracy": "Proporción de preguntas fuera del ámbito DNI rechazadas correctamente sin inventar información."
+  },
+  "runs": [
+    {
+      "label": "local_qwen",
+      "provider": "Ollama local",
+      "model": "qwen2.5:3b",
+      "questions_evaluated": 12,
+      "subjective_hits": 12,
+      "subjective_fails": 0,
+      "ragas_summary": {
+        "faithfulness": 0.788889,
+        "answer_relevancy": 0.638091,
+        "context_precision": 0.669444,
+        "context_recall": 0.833333
+      },
+      "metricas_propias_summary": {
+        "expected_source_coverage": 0.95,
+        "out_of_scope_rejection_accuracy": 1
+      },
+      "results": [
+        {
+          "id": "q01",
+          "pregunta": "¿Qué es DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.720481,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q02",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.833432,
+            "context_precision": 0.2,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 0.5,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q03",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.929481,
+            "context_precision": 0.416667,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q04",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.728479,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q05",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.754852,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q06",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.8,
+            "answer_relevancy": 0.714958,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q07",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.852054,
+            "context_precision": 0.833333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q08",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.666667,
+            "answer_relevancy": 0.655161,
+            "context_precision": 0.583333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q09",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.891272,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q10",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.576924,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q11",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        },
+        {
+          "id": "q12",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "local_llama",
+      "provider": "Ollama local",
+      "model": "llama3.2:3b",
+      "questions_evaluated": 12,
+      "subjective_hits": 10,
+      "subjective_fails": 2,
+      "ragas_summary": {
+        "faithfulness": 0.716667,
+        "answer_relevancy": 0.471928,
+        "context_precision": 0.669444,
+        "context_recall": 0.833333
+      },
+      "metricas_propias_summary": {
+        "expected_source_coverage": 0.95,
+        "out_of_scope_rejection_accuracy": 1
+      },
+      "results": [
+        {
+          "id": "q01",
+          "pregunta": "¿Qué es DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.958458,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q02",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.864146,
+            "context_precision": 0.2,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 0.5,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q03",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.8,
+            "answer_relevancy": 0.447922,
+            "context_precision": 0.416667,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q04",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.840751,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q05",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.754852,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q06",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.833333,
+            "answer_relevancy": 0.0,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q07",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "calidad_subjetiva": "FALLO",
+          "ragas": {
+            "faithfulness": 0.8,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.833333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q08",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "calidad_subjetiva": "FALLO",
+          "ragas": {
+            "faithfulness": 0.166667,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.583333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q09",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.945497,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q10",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.851508,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q11",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        },
+        {
+          "id": "q12",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "poligpt_gemma27b",
+      "provider": "PoliGPT",
+      "model": "gemma3:27b",
+      "questions_evaluated": 12,
+      "subjective_hits": 12,
+      "subjective_fails": 0,
+      "ragas_summary": {
+        "faithfulness": 0.716667,
+        "answer_relevancy": 0.612921,
+        "context_precision": 0.669444,
+        "context_recall": 0.833333
+      },
+      "metricas_propias_summary": {
+        "expected_source_coverage": 0.95,
+        "out_of_scope_rejection_accuracy": 1
+      },
+      "results": [
+        {
+          "id": "q01",
+          "pregunta": "¿Qué es DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.961001,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q02",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.791311,
+            "context_precision": 0.2,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 0.5,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q03",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.457043,
+            "context_precision": 0.416667,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q04",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.5,
+            "answer_relevancy": 0.728503,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q05",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.754897,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q06",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.70542,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q07",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.852101,
+            "context_precision": 0.833333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q08",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.6,
+            "answer_relevancy": 0.702691,
+            "context_precision": 0.583333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q09",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.891281,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q10",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.5,
+            "answer_relevancy": 0.510803,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q11",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        },
+        {
+          "id": "q12",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "poligpt_llama70b",
+      "provider": "PoliGPT",
+      "model": "llama3.3:70b",
+      "questions_evaluated": 12,
+      "subjective_hits": 12,
+      "subjective_fails": 0,
+      "ragas_summary": {
+        "faithfulness": 0.775463,
+        "answer_relevancy": 0.582995,
+        "context_precision": 0.669444,
+        "context_recall": 0.833333
+      },
+      "metricas_propias_summary": {
+        "expected_source_coverage": 0.95,
+        "out_of_scope_rejection_accuracy": 1
+      },
+      "results": [
+        {
+          "id": "q01",
+          "pregunta": "¿Qué es DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.888889,
+            "answer_relevancy": 0.847742,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q02",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.819372,
+            "context_precision": 0.2,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 0.5,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q03",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.634365,
+            "context_precision": 0.416667,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q04",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.884881,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q05",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.754897,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q06",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.75,
+            "answer_relevancy": 0.831278,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q07",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.833333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q08",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.887675,
+            "context_precision": 0.583333,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q09",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.666667,
+            "answer_relevancy": 0.945486,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q10",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.390244,
+            "context_precision": 1.0,
+            "context_recall": 1.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": 1.0,
+            "out_of_scope_rejection_accuracy": null
+          },
+          "error": null
+        },
+        {
+          "id": "q11",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        },
+        {
+          "id": "q12",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "calidad_subjetiva": "ACIERTO",
+          "ragas": {
+            "faithfulness": 0.0,
+            "answer_relevancy": 0.0,
+            "context_precision": 0.0,
+            "context_recall": 0.0
+          },
+          "metricas_propias": {
+            "expected_source_coverage": null,
+            "out_of_scope_rejection_accuracy": true
+          },
+          "error": null
+        }
+      ]
+    }
+  ]
+}

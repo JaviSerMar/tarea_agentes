@@ -49,6 +49,9 @@
           "fuentes_recuperadas": [
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué es DNI?\nA: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 12.35,
@@ -78,6 +81,13 @@
             "09_como_participar.txt",
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué significa el nombre \"Damos Nuestra Ilusión\"?\nA: Representa la idea de compartir no solo alimentos, sino también esperanza, alegría y motivación.",
+            "Q: ¿Hay proyectos nuevos planeados?\nA: DNI está siempre abierto a nuevos proyectos según las necesidades sociales que detectamos y las propuestas de voluntarios. Hemos tenido proyectos puntuales como talleres con niños, recogidas de ropa, campañas de sensibilización, etc. Si tienes una idea para un nuevo proyecto social, ¡compártela! Valoramos la creatividad y el espíritu emprendedor de nuestros voluntarios. La comunidad decide democráticamente qué nuevos proyectos impulsar.",
+            "Q: ¿Qué es lo que más valoran las personas a las que ayudamos?\nA: Valoran la cercanía, la conversación y el sentirse vistos y escuchados. A veces un rato de charla vale tanto como un café y una valenciana.",
+            "Q: ¿Puedo proponer ideas o nuevos proyectos?\nA: ¡Por supuesto! DNI es una organización horizontal donde todas las ideas son bienvenidas. Si tienes una propuesta de nuevo proyecto social o mejoras para los actuales, compártela con los coordinadores en el grupo de WhatsApp o en persona. Muchos de nuestros proyectos nacieron de ideas de voluntarios. Creemos en la co-creación y en que todos podemos aportar.",
+            "Q: ¿Cuál es la filosofía de DNI?\nA: Nuestra filosofía se resume en \"PARA. MIRA. AYUDA\". PARA: detente en tu día a día y observa tu alrededor. MIRA: con empatía a las personas que te rodean. AYUDA: actúa de forma directa para mejorar la vida de otros. Creemos en el voluntariado sin burocracia, basado en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real. ¿Te gustaría saber más sobre cómo ponemos esta filosofía en práctica? Puedes encontrar más información sobre nuestros proyectos en nuestra web o Instagram [dnivalenciaa](https://www.instagram.com/dnivalenciaa?igsh=MWRicTFocW5jODN6NQ==)."
+          ],
           "source_recall": 0.5,
           "rejection_ok": null,
           "elapsed_s": 10.38,
@@ -103,6 +113,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "07_desayunos_logistica.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Si me apunto un día a desayunos tengo que ir al resto?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades.",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Si me apunto un día tengo que ir siempre?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -131,6 +148,13 @@
             "07_desayunos_logistica.txt",
             "15_desayunos_100_preguntas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el punto de encuentro para desayunos?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia. Desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Dónde es el punto de encuentro?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Hay transporte para ir al punto de encuentro?\nA: Cada voluntario llega por su cuenta. El punto, Puerta de la Mar, está bien comunicado con bus y metro.",
+            "Q: ¿Dónde quedamos?\nA: El punto de encuentro siempre es en Puerta de la Mar, y desde allí recorremos juntos diferentes zonas de Valencia.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 7.11,
@@ -158,6 +182,10 @@
             "01_faq_dni.txt",
             "11_horarios_ubicaciones.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 5.9,
@@ -184,6 +212,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -213,6 +248,13 @@
             "11_horarios_ubicaciones.txt",
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar (COLES)?\nA: El refuerzo escolar (COLES) se realiza en una biblioteca tutorizada en Valencia. La ubicación exacta y los horarios (generalmente tardes entre semana) te los facilitamos cuando te apuntas al proyecto, ya que requiere un compromiso más regular y queremos que sea accesible para tu zona. Si te interesa, contacta al 647 440 275 y te damos todos los detalles específicos.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 6.99,
@@ -239,6 +281,13 @@
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí, para empezar es indispensable tener el certificado de delitos sexuales en vigor, así como rellenar el seguro del voluntario.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí para empezar es indispensable tener el certificado de delitos sexuales en vigor así como rellenar el seguro del voluntario.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 6.98,
@@ -263,6 +312,9 @@
           ],
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde está la residencia La Acollida?\nA: En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -289,6 +341,9 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué días se hace la actividad con abuelitos?\nA: Los miércoles de 17:30 a 18:30."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 5.6,
@@ -314,6 +369,13 @@
             "15_desayunos_100_preguntas.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo contacto con alguien de la asociación?\nA: La mejor manera es entrar en el grupo de WhatsApp. Escribe a alguno de los administradores y ellos te redirigirán o te resolverán la pregunta.",
+            "Q: ¿Cuánto cuesta participar?\nA: Nada. Todo está cubierto gracias a donaciones y a la organización. Solo aportas tu tiempo y tu ilusión.",
+            "Q: ¿Qué pasa si no puedo quedarme hasta el final del recorrido?\nA: No pasa nada, pero avísalo antes de empezar para que el staff lo tenga en cuenta.",
+            "Q: ¿Cuánto tiempo se recomienda participar para notar impacto?\nA: Al menos un trimestre, aunque muchos voluntarios continúan todo el curso.",
+            "Q: ¿Cómo vamos hasta la Coma?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
+          ],
           "source_recall": null,
           "rejection_ok": true,
           "elapsed_s": 6.1,
@@ -337,6 +399,13 @@
           "fuentes_recuperadas": [
             "15_desayunos_100_preguntas.txt",
             "16_resis_49_preguntas.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Sirve esta experiencia como voluntariado reconocido para el colegio o la universidad?\nA: Sí, en algunos centros educativos y universidades puede contar como horas de voluntariado. Solo tienes que solicitar el certificado si lo necesitas.",
+            "Q: ¿Puedo hacer prácticas universitarias con vosotros?\nA: En algunos casos sí. Escríbenos y vemos si tu universidad lo permite como actividad solidaria reconocida.",
+            "Q: ¿Tengo que esperarme al inicio de curso para poder empezar?\nA: No, no hace falta empezar al inicio de curso. Te puedes enganchar en cualquier momento.",
+            "Q: ¿Este voluntariado es solo para jóvenes?\nA: Sí, enfocado en personas universitarias o preuniversitarias (18-25 años). Si no es tu caso, se valorará.",
+            "Q: Si me apunto, ¿tengo que ir todas las semanas?\nA: Sí, la actividad semanal requiere el compromiso de ir a lo largo del curso para crear un vínculo con los abuelitos."
           ],
           "source_recall": null,
           "rejection_ok": true,
@@ -387,6 +456,9 @@
           "fuentes_recuperadas": [
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué es DNI?\nA: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 41.06,
@@ -416,6 +488,13 @@
             "09_como_participar.txt",
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué significa el nombre \"Damos Nuestra Ilusión\"?\nA: Representa la idea de compartir no solo alimentos, sino también esperanza, alegría y motivación.",
+            "Q: ¿Hay proyectos nuevos planeados?\nA: DNI está siempre abierto a nuevos proyectos según las necesidades sociales que detectamos y las propuestas de voluntarios. Hemos tenido proyectos puntuales como talleres con niños, recogidas de ropa, campañas de sensibilización, etc. Si tienes una idea para un nuevo proyecto social, ¡compártela! Valoramos la creatividad y el espíritu emprendedor de nuestros voluntarios. La comunidad decide democráticamente qué nuevos proyectos impulsar.",
+            "Q: ¿Qué es lo que más valoran las personas a las que ayudamos?\nA: Valoran la cercanía, la conversación y el sentirse vistos y escuchados. A veces un rato de charla vale tanto como un café y una valenciana.",
+            "Q: ¿Puedo proponer ideas o nuevos proyectos?\nA: ¡Por supuesto! DNI es una organización horizontal donde todas las ideas son bienvenidas. Si tienes una propuesta de nuevo proyecto social o mejoras para los actuales, compártela con los coordinadores en el grupo de WhatsApp o en persona. Muchos de nuestros proyectos nacieron de ideas de voluntarios. Creemos en la co-creación y en que todos podemos aportar.",
+            "Q: ¿Cuál es la filosofía de DNI?\nA: Nuestra filosofía se resume en \"PARA. MIRA. AYUDA\". PARA: detente en tu día a día y observa tu alrededor. MIRA: con empatía a las personas que te rodean. AYUDA: actúa de forma directa para mejorar la vida de otros. Creemos en el voluntariado sin burocracia, basado en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real. ¿Te gustaría saber más sobre cómo ponemos esta filosofía en práctica? Puedes encontrar más información sobre nuestros proyectos en nuestra web o Instagram [dnivalenciaa](https://www.instagram.com/dnivalenciaa?igsh=MWRicTFocW5jODN6NQ==)."
+          ],
           "source_recall": 0.5,
           "rejection_ok": null,
           "elapsed_s": 11.14,
@@ -441,6 +520,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "07_desayunos_logistica.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Si me apunto un día a desayunos tengo que ir al resto?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades.",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Si me apunto un día tengo que ir siempre?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -469,6 +555,13 @@
             "07_desayunos_logistica.txt",
             "15_desayunos_100_preguntas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el punto de encuentro para desayunos?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia. Desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Dónde es el punto de encuentro?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Hay transporte para ir al punto de encuentro?\nA: Cada voluntario llega por su cuenta. El punto, Puerta de la Mar, está bien comunicado con bus y metro.",
+            "Q: ¿Dónde quedamos?\nA: El punto de encuentro siempre es en Puerta de la Mar, y desde allí recorremos juntos diferentes zonas de Valencia.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 7.64,
@@ -496,6 +589,10 @@
             "01_faq_dni.txt",
             "11_horarios_ubicaciones.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 5.93,
@@ -522,6 +619,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -551,6 +655,13 @@
             "11_horarios_ubicaciones.txt",
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar (COLES)?\nA: El refuerzo escolar (COLES) se realiza en una biblioteca tutorizada en Valencia. La ubicación exacta y los horarios (generalmente tardes entre semana) te los facilitamos cuando te apuntas al proyecto, ya que requiere un compromiso más regular y queremos que sea accesible para tu zona. Si te interesa, contacta al 647 440 275 y te damos todos los detalles específicos.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 9.07,
@@ -577,6 +688,13 @@
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí, para empezar es indispensable tener el certificado de delitos sexuales en vigor, así como rellenar el seguro del voluntario.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí para empezar es indispensable tener el certificado de delitos sexuales en vigor así como rellenar el seguro del voluntario.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 8.7,
@@ -601,6 +719,9 @@
           ],
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde está la residencia La Acollida?\nA: En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -627,6 +748,9 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué días se hace la actividad con abuelitos?\nA: Los miércoles de 17:30 a 18:30."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 5.67,
@@ -652,6 +776,13 @@
             "15_desayunos_100_preguntas.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo contacto con alguien de la asociación?\nA: La mejor manera es entrar en el grupo de WhatsApp. Escribe a alguno de los administradores y ellos te redirigirán o te resolverán la pregunta.",
+            "Q: ¿Cuánto cuesta participar?\nA: Nada. Todo está cubierto gracias a donaciones y a la organización. Solo aportas tu tiempo y tu ilusión.",
+            "Q: ¿Qué pasa si no puedo quedarme hasta el final del recorrido?\nA: No pasa nada, pero avísalo antes de empezar para que el staff lo tenga en cuenta.",
+            "Q: ¿Cuánto tiempo se recomienda participar para notar impacto?\nA: Al menos un trimestre, aunque muchos voluntarios continúan todo el curso.",
+            "Q: ¿Cómo vamos hasta la Coma?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
+          ],
           "source_recall": null,
           "rejection_ok": true,
           "elapsed_s": 6.07,
@@ -675,6 +806,13 @@
           "fuentes_recuperadas": [
             "15_desayunos_100_preguntas.txt",
             "16_resis_49_preguntas.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Sirve esta experiencia como voluntariado reconocido para el colegio o la universidad?\nA: Sí, en algunos centros educativos y universidades puede contar como horas de voluntariado. Solo tienes que solicitar el certificado si lo necesitas.",
+            "Q: ¿Puedo hacer prácticas universitarias con vosotros?\nA: En algunos casos sí. Escríbenos y vemos si tu universidad lo permite como actividad solidaria reconocida.",
+            "Q: ¿Tengo que esperarme al inicio de curso para poder empezar?\nA: No, no hace falta empezar al inicio de curso. Te puedes enganchar en cualquier momento.",
+            "Q: ¿Este voluntariado es solo para jóvenes?\nA: Sí, enfocado en personas universitarias o preuniversitarias (18-25 años). Si no es tu caso, se valorará.",
+            "Q: Si me apunto, ¿tengo que ir todas las semanas?\nA: Sí, la actividad semanal requiere el compromiso de ir a lo largo del curso para crear un vínculo con los abuelitos."
           ],
           "source_recall": null,
           "rejection_ok": true,
@@ -725,6 +863,9 @@
           "fuentes_recuperadas": [
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué es DNI?\nA: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 7.99,
@@ -754,6 +895,13 @@
             "09_como_participar.txt",
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué significa el nombre \"Damos Nuestra Ilusión\"?\nA: Representa la idea de compartir no solo alimentos, sino también esperanza, alegría y motivación.",
+            "Q: ¿Hay proyectos nuevos planeados?\nA: DNI está siempre abierto a nuevos proyectos según las necesidades sociales que detectamos y las propuestas de voluntarios. Hemos tenido proyectos puntuales como talleres con niños, recogidas de ropa, campañas de sensibilización, etc. Si tienes una idea para un nuevo proyecto social, ¡compártela! Valoramos la creatividad y el espíritu emprendedor de nuestros voluntarios. La comunidad decide democráticamente qué nuevos proyectos impulsar.",
+            "Q: ¿Qué es lo que más valoran las personas a las que ayudamos?\nA: Valoran la cercanía, la conversación y el sentirse vistos y escuchados. A veces un rato de charla vale tanto como un café y una valenciana.",
+            "Q: ¿Puedo proponer ideas o nuevos proyectos?\nA: ¡Por supuesto! DNI es una organización horizontal donde todas las ideas son bienvenidas. Si tienes una propuesta de nuevo proyecto social o mejoras para los actuales, compártela con los coordinadores en el grupo de WhatsApp o en persona. Muchos de nuestros proyectos nacieron de ideas de voluntarios. Creemos en la co-creación y en que todos podemos aportar.",
+            "Q: ¿Cuál es la filosofía de DNI?\nA: Nuestra filosofía se resume en \"PARA. MIRA. AYUDA\". PARA: detente en tu día a día y observa tu alrededor. MIRA: con empatía a las personas que te rodean. AYUDA: actúa de forma directa para mejorar la vida de otros. Creemos en el voluntariado sin burocracia, basado en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real. ¿Te gustaría saber más sobre cómo ponemos esta filosofía en práctica? Puedes encontrar más información sobre nuestros proyectos en nuestra web o Instagram [dnivalenciaa](https://www.instagram.com/dnivalenciaa?igsh=MWRicTFocW5jODN6NQ==)."
+          ],
           "source_recall": 0.5,
           "rejection_ok": null,
           "elapsed_s": 5.54,
@@ -779,6 +927,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "07_desayunos_logistica.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Si me apunto un día a desayunos tengo que ir al resto?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades.",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Si me apunto un día tengo que ir siempre?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -807,6 +962,13 @@
             "07_desayunos_logistica.txt",
             "15_desayunos_100_preguntas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el punto de encuentro para desayunos?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia. Desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Dónde es el punto de encuentro?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Hay transporte para ir al punto de encuentro?\nA: Cada voluntario llega por su cuenta. El punto, Puerta de la Mar, está bien comunicado con bus y metro.",
+            "Q: ¿Dónde quedamos?\nA: El punto de encuentro siempre es en Puerta de la Mar, y desde allí recorremos juntos diferentes zonas de Valencia.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 4.81,
@@ -834,6 +996,10 @@
             "01_faq_dni.txt",
             "11_horarios_ubicaciones.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 5.33,
@@ -860,6 +1026,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -889,6 +1062,13 @@
             "11_horarios_ubicaciones.txt",
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar (COLES)?\nA: El refuerzo escolar (COLES) se realiza en una biblioteca tutorizada en Valencia. La ubicación exacta y los horarios (generalmente tardes entre semana) te los facilitamos cuando te apuntas al proyecto, ya que requiere un compromiso más regular y queremos que sea accesible para tu zona. Si te interesa, contacta al 647 440 275 y te damos todos los detalles específicos.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 4.71,
@@ -915,6 +1095,13 @@
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí, para empezar es indispensable tener el certificado de delitos sexuales en vigor, así como rellenar el seguro del voluntario.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí para empezar es indispensable tener el certificado de delitos sexuales en vigor así como rellenar el seguro del voluntario.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 4.26,
@@ -939,6 +1126,9 @@
           ],
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde está la residencia La Acollida?\nA: En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -965,6 +1155,9 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué días se hace la actividad con abuelitos?\nA: Los miércoles de 17:30 a 18:30."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 3.79,
@@ -990,6 +1183,13 @@
             "15_desayunos_100_preguntas.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo contacto con alguien de la asociación?\nA: La mejor manera es entrar en el grupo de WhatsApp. Escribe a alguno de los administradores y ellos te redirigirán o te resolverán la pregunta.",
+            "Q: ¿Cuánto cuesta participar?\nA: Nada. Todo está cubierto gracias a donaciones y a la organización. Solo aportas tu tiempo y tu ilusión.",
+            "Q: ¿Qué pasa si no puedo quedarme hasta el final del recorrido?\nA: No pasa nada, pero avísalo antes de empezar para que el staff lo tenga en cuenta.",
+            "Q: ¿Cuánto tiempo se recomienda participar para notar impacto?\nA: Al menos un trimestre, aunque muchos voluntarios continúan todo el curso.",
+            "Q: ¿Cómo vamos hasta la Coma?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
+          ],
           "source_recall": null,
           "rejection_ok": true,
           "elapsed_s": 3.43,
@@ -1013,6 +1213,13 @@
           "fuentes_recuperadas": [
             "15_desayunos_100_preguntas.txt",
             "16_resis_49_preguntas.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Sirve esta experiencia como voluntariado reconocido para el colegio o la universidad?\nA: Sí, en algunos centros educativos y universidades puede contar como horas de voluntariado. Solo tienes que solicitar el certificado si lo necesitas.",
+            "Q: ¿Puedo hacer prácticas universitarias con vosotros?\nA: En algunos casos sí. Escríbenos y vemos si tu universidad lo permite como actividad solidaria reconocida.",
+            "Q: ¿Tengo que esperarme al inicio de curso para poder empezar?\nA: No, no hace falta empezar al inicio de curso. Te puedes enganchar en cualquier momento.",
+            "Q: ¿Este voluntariado es solo para jóvenes?\nA: Sí, enfocado en personas universitarias o preuniversitarias (18-25 años). Si no es tu caso, se valorará.",
+            "Q: Si me apunto, ¿tengo que ir todas las semanas?\nA: Sí, la actividad semanal requiere el compromiso de ir a lo largo del curso para crear un vínculo con los abuelitos."
           ],
           "source_recall": null,
           "rejection_ok": true,
@@ -1063,6 +1270,9 @@
           "fuentes_recuperadas": [
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué es DNI?\nA: DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 12.41,
@@ -1092,6 +1302,13 @@
             "09_como_participar.txt",
             "08_preguntas_basicas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué significa el nombre \"Damos Nuestra Ilusión\"?\nA: Representa la idea de compartir no solo alimentos, sino también esperanza, alegría y motivación.",
+            "Q: ¿Hay proyectos nuevos planeados?\nA: DNI está siempre abierto a nuevos proyectos según las necesidades sociales que detectamos y las propuestas de voluntarios. Hemos tenido proyectos puntuales como talleres con niños, recogidas de ropa, campañas de sensibilización, etc. Si tienes una idea para un nuevo proyecto social, ¡compártela! Valoramos la creatividad y el espíritu emprendedor de nuestros voluntarios. La comunidad decide democráticamente qué nuevos proyectos impulsar.",
+            "Q: ¿Qué es lo que más valoran las personas a las que ayudamos?\nA: Valoran la cercanía, la conversación y el sentirse vistos y escuchados. A veces un rato de charla vale tanto como un café y una valenciana.",
+            "Q: ¿Puedo proponer ideas o nuevos proyectos?\nA: ¡Por supuesto! DNI es una organización horizontal donde todas las ideas son bienvenidas. Si tienes una propuesta de nuevo proyecto social o mejoras para los actuales, compártela con los coordinadores en el grupo de WhatsApp o en persona. Muchos de nuestros proyectos nacieron de ideas de voluntarios. Creemos en la co-creación y en que todos podemos aportar.",
+            "Q: ¿Cuál es la filosofía de DNI?\nA: Nuestra filosofía se resume en \"PARA. MIRA. AYUDA\". PARA: detente en tu día a día y observa tu alrededor. MIRA: con empatía a las personas que te rodean. AYUDA: actúa de forma directa para mejorar la vida de otros. Creemos en el voluntariado sin burocracia, basado en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real. ¿Te gustaría saber más sobre cómo ponemos esta filosofía en práctica? Puedes encontrar más información sobre nuestros proyectos en nuestra web o Instagram [dnivalenciaa](https://www.instagram.com/dnivalenciaa?igsh=MWRicTFocW5jODN6NQ==)."
+          ],
           "source_recall": 0.5,
           "rejection_ok": null,
           "elapsed_s": 13.58,
@@ -1117,6 +1334,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "07_desayunos_logistica.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Si me apunto un día a desayunos tengo que ir al resto?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades.",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+            "Q: ¿Si me apunto un día tengo que ir siempre?\nA: No. Los desayunos y cenas solidarios son lo que en DNI llamamos actividades puntuales: son voluntariados a los que te puedes apuntar un día sin la necesidad de que tengas que ir a las próximas actividades."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -1145,6 +1369,13 @@
             "07_desayunos_logistica.txt",
             "15_desayunos_100_preguntas.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el punto de encuentro para desayunos?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia. Desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Dónde es el punto de encuentro?\nA: El punto de encuentro siempre es la Porta de la Mar de Valencia desde ahí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+            "Q: ¿Hay transporte para ir al punto de encuentro?\nA: Cada voluntario llega por su cuenta. El punto, Puerta de la Mar, está bien comunicado con bus y metro.",
+            "Q: ¿Dónde quedamos?\nA: El punto de encuentro siempre es en Puerta de la Mar, y desde allí recorremos juntos diferentes zonas de Valencia.",
+            "Q: ¿Qué se hace en la actividad de desayunos solidarios?\nA: La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 8.38,
@@ -1172,6 +1403,10 @@
             "01_faq_dni.txt",
             "11_horarios_ubicaciones.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).",
+            "Q: ¿A qué hora son los desayunos solidarios?\nA: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 9.83,
@@ -1198,6 +1433,13 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Qué días es el refuerzo escolar?\nA: Lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30.",
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -1227,6 +1469,13 @@
             "11_horarios_ubicaciones.txt",
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar (COLES)?\nA: El refuerzo escolar (COLES) se realiza en una biblioteca tutorizada en Valencia. La ubicación exacta y los horarios (generalmente tardes entre semana) te los facilitamos cuando te apuntas al proyecto, ya que requiere un compromiso más regular y queremos que sea accesible para tu zona. Si te interesa, contacta al 647 440 275 y te damos todos los detalles específicos.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.",
+            "Q: ¿Qué se hace en el refuerzo escolar?\nA: En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 12.13,
@@ -1253,6 +1502,13 @@
             "01_faq_dni.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo vamos hasta la Coma para el refuerzo escolar?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí, para empezar es indispensable tener el certificado de delitos sexuales en vigor, así como rellenar el seguro del voluntario.",
+            "Q: ¿Necesito documentación para el refuerzo escolar?\nA: Sí para empezar es indispensable tener el certificado de delitos sexuales en vigor así como rellenar el seguro del voluntario.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+            "Q: ¿Dónde es el refuerzo escolar?\nA: Es el CEIP Antonio Ferrandis de la Coma Valencia."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 7.31,
@@ -1277,6 +1533,9 @@
           ],
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Dónde está la residencia La Acollida?\nA: En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22."
           ],
           "source_recall": 1.0,
           "rejection_ok": null,
@@ -1303,6 +1562,9 @@
           "fuentes_recuperadas": [
             "01_faq_dni.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Qué días se hace la actividad con abuelitos?\nA: Los miércoles de 17:30 a 18:30."
+          ],
           "source_recall": 1.0,
           "rejection_ok": null,
           "elapsed_s": 4.01,
@@ -1328,6 +1590,13 @@
             "15_desayunos_100_preguntas.txt",
             "06_coles_refuerzo.txt"
           ],
+          "retrieved_contexts": [
+            "Q: ¿Cómo contacto con alguien de la asociación?\nA: La mejor manera es entrar en el grupo de WhatsApp. Escribe a alguno de los administradores y ellos te redirigirán o te resolverán la pregunta.",
+            "Q: ¿Cuánto cuesta participar?\nA: Nada. Todo está cubierto gracias a donaciones y a la organización. Solo aportas tu tiempo y tu ilusión.",
+            "Q: ¿Qué pasa si no puedo quedarme hasta el final del recorrido?\nA: No pasa nada, pero avísalo antes de empezar para que el staff lo tenga en cuenta.",
+            "Q: ¿Cuánto tiempo se recomienda participar para notar impacto?\nA: Al menos un trimestre, aunque muchos voluntarios continúan todo el curso.",
+            "Q: ¿Cómo vamos hasta la Coma?\nA: Organizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir."
+          ],
           "source_recall": null,
           "rejection_ok": true,
           "elapsed_s": 5.04,
@@ -1351,6 +1620,13 @@
           "fuentes_recuperadas": [
             "15_desayunos_100_preguntas.txt",
             "16_resis_49_preguntas.txt"
+          ],
+          "retrieved_contexts": [
+            "Q: ¿Sirve esta experiencia como voluntariado reconocido para el colegio o la universidad?\nA: Sí, en algunos centros educativos y universidades puede contar como horas de voluntariado. Solo tienes que solicitar el certificado si lo necesitas.",
+            "Q: ¿Puedo hacer prácticas universitarias con vosotros?\nA: En algunos casos sí. Escríbenos y vemos si tu universidad lo permite como actividad solidaria reconocida.",
+            "Q: ¿Tengo que esperarme al inicio de curso para poder empezar?\nA: No, no hace falta empezar al inicio de curso. Te puedes enganchar en cualquier momento.",
+            "Q: ¿Este voluntariado es solo para jóvenes?\nA: Sí, enfocado en personas universitarias o preuniversitarias (18-25 años). Si no es tu caso, se valorará.",
+            "Q: Si me apunto, ¿tengo que ir todas las semanas?\nA: Sí, la actividad semanal requiere el compromiso de ir a lo largo del curso para crear un vínculo con los abuelitos."
           ],
           "source_recall": null,
           "rejection_ok": true,

@@ -10,6 +10,7 @@ from typing import Any
 RUNS_DIR = Path("benchmark/runs")
 OUTPUT_JSON = Path("benchmark/benchmark.json")
 OUTPUT_MD = Path("benchmark/benchmark.md")
+RAGAS_RESULTS_FILE = Path("evaluacion/ragas_results.json")
 
 EXPECTED_RUNS = [
     (
@@ -145,6 +146,11 @@ def build_payload() -> dict[str, Any]:
                     "fuentes_recuperadas": result["salida"]["fuentes"]
                     if result.get("salida")
                     else [],
+                    "retrieved_contexts": [
+                        chunk["text"] for chunk in result["salida"]["chunks"]
+                    ]
+                    if result.get("salida")
+                    else [],
                     "source_recall": result["source_recall"],
                     "rejection_ok": result["rejection_ok"],
                     "elapsed_s": result["elapsed_s"],
@@ -219,7 +225,7 @@ def build_markdown(payload: dict[str, Any]) -> str:
         "el corpus, el chunking, el retrieval híbrido, los embeddings de Ollama y "
         "el vector store FAISS; únicamente se cambió el LLM generativo.",
         "",
-        "## Resumen de resultados",
+        "## Resultados del benchmark base",
         "",
         "| Proveedor | Modelo | Ejecución | Calidad subjetiva | Latencia LLM media (s) | Tiempo end-to-end medio (s) | Tokens/s | Source recall | Fuera de ámbito |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|",
@@ -246,26 +252,85 @@ def build_markdown(payload: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Interpretación de resultados",
+            "La revisión manual detectó que `llama3.2:3b` falló en `q07` y `q08` "
+            "por interpretar como contradicciones casos en los que podía ofrecer "
+            "una respuesta válida. Los otros tres modelos respondieron correctamente "
+            "las 12 preguntas.",
             "",
-            "Los cuatro modelos completaron las 12 consultas y obtuvieron el mismo "
-            "recall medio de fuentes (0.95) y el mismo acierto en preguntas fuera "
-            "de ámbito (1.00). Esto indica que el retrieval y la salvaguarda "
-            "anti-alucinación se comportaron de forma estable durante la comparación.",
-            "",
-            "Sin embargo, la revisión manual sí muestra diferencias de calidad. "
-            "`qwen2.5:3b`, `gemma3:27b` y `llama3.3:70b` respondieron correctamente "
-            "las 12 preguntas. En cambio, `llama3.2:3b` falló en `q07` y `q08` "
-            "porque interpretó como contradicciones casos en los que podía ofrecer "
-            "una respuesta válida y fundamentada.",
-            "",
-            "Entre los modelos con 12 aciertos, `gemma3:27b` mediante PoliGPT obtuvo "
-            "la menor latencia media del LLM y la mayor velocidad media de generación. "
-            "Por ello, con los datos actuales, es el modelo con mejor equilibrio entre "
-            "calidad observada y rendimiento. `qwen2.5:3b` constituye una alternativa "
-            "local sólida, ya que también logró 12 aciertos sin depender de la VPN ni "
-            "de un servicio remoto.",
-            "",
+        ]
+    )
+
+    if RAGAS_RESULTS_FILE.exists():
+        with RAGAS_RESULTS_FILE.open("r", encoding="utf-8") as file:
+            ragas_payload = json.load(file)
+
+        lines.extend(
+            [
+                "## Resultados RAGAs y métricas propias",
+                "",
+                "La evaluación RAGAs se realizó usando `gemma3:27b` de PoliGPT como "
+                "modelo juez y `poligpt-embed-bge-m3` únicamente como embedding de "
+                "evaluación. Estos componentes no modifican el pipeline original del agente.",
+                "",
+                "| Modelo | Faithfulness | Answer relevancy | Context precision | Context recall | Expected Source Coverage | Out-of-Scope Rejection Accuracy |",
+                "|---|---:|---:|---:|---:|---:|---:|",
+            ]
+        )
+
+        for run in ragas_payload["runs"]:
+            ragas = run["ragas_summary"]
+            own = run["metricas_propias_summary"]
+            lines.append(
+                "| `{model}` | {faith:.6f} | {relevancy:.6f} | {precision:.6f} | "
+                "{recall:.6f} | {coverage:.2f} | {rejection:.2f} |".format(
+                    model=run["model"],
+                    faith=ragas["faithfulness"],
+                    relevancy=ragas["answer_relevancy"],
+                    precision=ragas["context_precision"],
+                    recall=ragas["context_recall"],
+                    coverage=own["expected_source_coverage"],
+                    rejection=own["out_of_scope_rejection_accuracy"],
+                )
+            )
+
+        lines.extend(
+            [
+                "",
+                "Las métricas relacionadas con la recuperación se mantienen constantes "
+                "entre modelos: todos utilizan el mismo retrieval, los mismos embeddings "
+                "y el mismo vector store. También todos rechazan correctamente las "
+                "preguntas fuera de ámbito.",
+                "",
+                "La diferencia aparece en la generación de la respuesta. `qwen2.5:3b` "
+                "obtiene el mejor resultado de `faithfulness` y de `answer_relevancy`, "
+                "además de haber conseguido 12/12 aciertos en la revisión manual. "
+                "`gemma3:27b` también alcanza 12/12 y es el más rápido, pero sus "
+                "resultados RAGAs de calidad son inferiores a los de Qwen.",
+                "",
+                "## Modelo seleccionado",
+                "",
+                "Se selecciona **`qwen2.5:3b` mediante Ollama local** como modelo final "
+                "recomendado. La elección se basa en sus 12/12 aciertos manuales, sus "
+                "mejores valores RAGAs de fidelidad y relevancia, y su funcionamiento "
+                "local sin depender de VPN ni de disponibilidad de un servicio externo.",
+                "",
+                "`gemma3:27b` queda como alternativa remota especialmente interesante "
+                "cuando se prioriza la velocidad de respuesta.",
+                "",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "## Resultados RAGAs y métricas propias",
+                "",
+                "Pendientes de generar mediante `scripts/run_ragas_eval.py`.",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
             "## Incidencias cualitativas detectadas",
             "",
             "| Modelo | Pregunta | Incidencia |",
