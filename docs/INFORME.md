@@ -2,10 +2,10 @@
 
 ## Asistente Inteligente de Conocimiento sobre Damos Nuestra Ilusión
 
-**Asignatura:** Inteligencia Artificial  
-**Grado:** Tecnologías Interactivas — Universitat Politècnica de València  
-**Integrantes:** Javier Serrano Marco, Javier Camarena Cuartero y Jaime Ferrer Prats  
-**Curso académico:** 2025-2026  
+**Asignatura:** Inteligencia Artificial
+**Grado:** Tecnologías Interactivas — Universitat Politècnica de València
+**Integrantes:** Javier Serrano Marco, Javier Camarena Cuartero y Jaime Ferrer Prats
+**Curso académico:** 2025-2026
 
 ---
 
@@ -30,8 +30,9 @@ Los objetivos principales del sistema son los siguientes:
 - Permitir sustituir modelos, embeddings o vector stores sin modificar la lógica central.
 - Comparar distintos modelos generativos mediante un benchmark reproducible.
 - Evaluar la calidad del sistema con métricas automáticas y revisión manual.
+- Incorporar un frontend Streamlit funcional para facilitar la demostración oral del agente.
 
-La entrega declara las bandas 5, 6, 7, 8 y 10, correspondientes al pipeline funcional, cita de fuentes, benchmark con cuatro modelos, evaluación RAGAs con métricas propias y arquitectura hexagonal.
+La entrega declara las bandas 5, 6, 7, 8 y 10, correspondientes al pipeline funcional, cita de fuentes, benchmark con cuatro modelos, evaluación RAGAs con métricas propias y arquitectura hexagonal. Además, declara el extra de frontend Streamlit funcional.
 
 ---
 
@@ -413,33 +414,57 @@ Además de los tests automáticos, se realizaron comprobaciones funcionales real
 
 ---
 
-## 11. Dificultades encontradas
+
+
+## 11. Frontend Streamlit para demostración
+
+Como extra funcional, se ha incorporado una interfaz web mínima desarrollada con Streamlit. Esta interfaz no sustituye al contrato oficial de corrección, que sigue siendo la función `consultar` expuesta en `consultar.py`, sino que actúa como adaptador de entrada adicional para facilitar la presentación oral del agente.
+
+El frontend permite escribir una pregunta sobre DNI y visualizar la respuesta generada por el agente, las fuentes documentales utilizadas, las métricas de ejecución y las evidencias recuperadas. También permite demostrar de forma clara los dos comportamientos críticos del sistema: el rechazo de preguntas fuera de ámbito y la presentación transparente de contradicciones reales del corpus.
+
+La interfaz se ejecuta mediante:
+
+```powershell
+python -m streamlit run streamlit_app.py
+```
+
+Durante la validación se comprobó con tres consultas representativas:
+
+| Consulta | Comportamiento mostrado en la interfaz |
+|---|---|
+| `¿Qué es DNI?` | Respuesta correcta, fuente `08_preguntas_basicas.txt`, métricas y evidencias recuperadas. |
+| `¿A qué hora son los desayunos solidarios?` | Presentación de las dos versiones contradictorias y sus fuentes. |
+| `¿Cuánto cuesta alquilar un piso en Valencia?` | Rechazo explícito mediante “No tengo esa información en mis fuentes.” |
+
+---
+
+## 12. Dificultades encontradas
 
 Durante el desarrollo se encontraron varias dificultades relevantes.
 
-### 11.1. Adaptación del repositorio inicial
+### 12.1. Adaptación del repositorio inicial
 
 El repositorio inicial estaba orientado a un caso de ejemplo distinto. Fue necesario sustituir referencias antiguas, adaptar el corpus, revisar la documentación y asegurar que la entrega final describe exclusivamente el caso DNI.
 
-### 11.2. Contradicciones en las fuentes
+### 12.2. Contradicciones en las fuentes
 
 La presencia de información diferente sobre los horarios requería evitar una respuesta artificialmente única. Se optó por una solución transparente: mostrar las versiones recuperadas y citar sus documentos.
 
-### 11.3. Comparación con PoliGPT
+### 12.3. Comparación con PoliGPT
 
 Para ejecutar modelos PoliGPT desde fuera del campus fue necesario configurar la VPN UPV y mantener las claves fuera del repositorio. Esto introdujo una dependencia externa únicamente durante el benchmark y la evaluación RAGAs.
 
-### 11.4. Compatibilidad de RAGAs
+### 12.4. Compatibilidad de RAGAs
 
 La instalación de RAGAs requirió ajustar versiones compatibles de LangChain. Una vez resuelta la compatibilidad, se verificaron individualmente las cuatro métricas antes de ejecutar la evaluación completa.
 
-### 11.5. Coste temporal de la evaluación
+### 12.5. Coste temporal de la evaluación
 
 La evaluación RAGAs completa sobre 48 respuestas requirió numerosas llamadas al modelo juez remoto y tuvo una duración elevada. Por ello, se realizó primero una prueba mínima sobre una sola pregunta antes de lanzar el proceso completo.
 
 ---
 
-## 12. Limitaciones y mejoras futuras
+## 13. Limitaciones y mejoras futuras
 
 La solución cumple los objetivos planteados, aunque mantiene algunas limitaciones:
 
@@ -447,19 +472,19 @@ La solución cumple los objetivos planteados, aunque mantiene algunas limitacion
 - La detección de contradicciones puede seguir refinándose para distinguir mejor información realmente incompatible de información complementaria.
 - El agente no implementa memoria conversacional persistente.
 - El benchmark podría ampliarse con preguntas más ambiguas o que requieran combinar varios documentos.
-- No se ha implementado interfaz gráfica, al no formar parte de las funcionalidades declaradas.
+- El frontend Streamlit está orientado a la demostración oral y no incorpora autenticación, persistencia de sesiones ni despliegue en servidor externo.
 
 Como posibles mejoras futuras se plantean:
 
 - añadir memoria conversacional controlada;
 - incorporar reranking de chunks;
 - ampliar el conjunto de evaluación;
-- desarrollar una interfaz web;
+- evolucionar el frontend Streamlit hacia una interfaz desplegable con historial de consultas;
 - estudiar modelos locales adicionales que mantengan calidad con menor latencia.
 
 ---
 
-## 13. Entregables generados
+## 14. Entregables generados
 
 Los principales ficheros de la entrega son:
 
@@ -468,6 +493,7 @@ Los principales ficheros de la entrega son:
 | `consultar.py` | Punto de entrada del agente. |
 | `features.json` | Declaración de funcionalidades implementadas. |
 | `README.md` | Guía general de instalación, arquitectura y ejecución. |
+| `streamlit_app.py` | Frontend Streamlit funcional para la demostración oral. |
 | `GRUPO.md` | Integrantes y reparto de trabajo. |
 | `AI_USAGE.md` | Declaración honesta de uso de asistentes de IA. |
 | `docs/ARCHITECTURE.md` | Explicación técnica de la arquitectura hexagonal. |
@@ -480,7 +506,7 @@ Los principales ficheros de la entrega son:
 
 ---
 
-## 14. Conclusiones
+## 15. Conclusiones
 
 Se ha desarrollado un agente RAG funcional sobre el corpus oficial de DNI, capaz de recuperar información relevante, citar fuentes, rechazar preguntas fuera de ámbito y manejar contradicciones presentes en los documentos.
 
