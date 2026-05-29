@@ -1,40 +1,42 @@
-# Benchmark — set de preguntas tipo
+# Benchmark del Agente RAG DNI
 
-Set reducido de **8 preguntas** para validar el agente sobre el corpus
-GTI Orienta. Cubre cuatro categorías:
+Este directorio contiene la evaluación comparativa del agente RAG sobre el corpus oficial de DNI (Damos Nuestra Ilusión).
 
-| Categoría | Cuántas | Para qué |
-|---|---|---|
-| `asignaturas` | 3 | Pregunta directa por temario. Retrieval semántico debería acertar. |
-| `primer_curso` | 1 | Pregunta acotada a un único documento. Útil para detectar si el chunking pierde contexto. |
-| `consejo` | 1 | Pregunta abierta que requiere combinar varios cursos. |
-| `trampa_retrieval` | 1 | El retrieval semántico se distrae (ver Colab §10). Aquí brillaría un retrieval híbrido (BM25 + semántico). |
-| `fuera_de_ambito` | 2 | Deben rechazarse con la frase literal `No tengo esa información en mis fuentes`. |
+## Objetivo
 
-> **Nota pedagógica.** Este set es un *ejemplo* deliberadamente pequeño.
-> Para banda 7 hace falta un benchmark contra **4 modelos distintos**
-> (2 PoliGPT + 2 locales). Este repo no lo trae porque es trabajo del alumno.
+El benchmark permite comparar cuatro modelos generativos manteniendo constante el resto del pipeline:
 
-## Ejecutar
+- Corpus DNI de 16 documentos.
+- Chunking adaptado a documentos narrativos y pares `Q:/A:`.
+- Retrieval híbrido semántico + BM25.
+- Embeddings locales mediante Ollama (`nomic-embed-text`).
+- Vector store FAISS.
 
-```bash
-python scripts/run_eval.py
-```
+De esta forma, la comparación mide el efecto del LLM generativo y no cambios en el sistema de recuperación.
 
-Salida en `benchmark/runs/run_<timestamp>.json`. Cada entrada incluye
-respuesta, chunks recuperados, fuentes y métricas (`prompt_tokens`,
-`output_tokens`, `tokens_per_sec`, `latencia_s`).
+## Modelos evaluados
 
-## Cómo evaluar los resultados
+| Proveedor | Modelo |
+|---|---|
+| Ollama local | `qwen2.5:3b` |
+| Ollama local | `llama3.2:3b` |
+| PoliGPT | `gemma3:27b` |
+| PoliGPT | `llama3.3:70b` |
 
-1. **Acierto factual**: ¿la respuesta es correcta según el corpus?
-2. **Cita correcta**: ¿la fuente declarada en `fuentes` contiene
-   realmente la información (banda 6)? Cruzad con `chunks[].text`.
-3. **No-alucinación**: las preguntas `fuera_de_ambito` deben devolver
-   la frase literal de rechazo.
-4. **Latencia**: cualquier `latencia_s > 30` baja a banda 5.
-5. **Tokens/segundo**: para comparar modelos.
+Los modelos PoliGPT requieren conexión a la VPN UPV cuando se trabaja fuera del campus. El catálogo disponible se consultó antes de ejecutar las pruebas, ya que puede cambiar con el tiempo.
 
-Para banda 8 podéis automatizar (1) y (3) con
-[RAGAs](https://docs.ragas.io/) — `faithfulness` y `answer_relevancy` son
-los dos más útiles para un set tan pequeño.
+## Preguntas
+
+El fichero `preguntas.json` contiene 12 preguntas:
+
+- Preguntas factuales directas sobre DNI y sus proyectos.
+- Preguntas logísticas sobre horarios, ubicaciones y documentación.
+- Un caso de contradicción real del corpus: horario de desayunos solidarios.
+- Dos preguntas fuera de ámbito, que deben rechazarse sin inventar información.
+
+## Ejecutar una evaluación
+
+Con el entorno virtual activo y la configuración deseada en `.env`, se puede ejecutar un modelo local:
+
+```powershell
+python scripts\run_eval.py --provider ollama --model qwen2.5:3b --label local_qwen

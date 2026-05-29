@@ -1,0 +1,1371 @@
+{
+  "benchmark": "Agente RAG DNI - comparación de cuatro modelos",
+  "pipeline_constante": {
+    "vector_store": "faiss",
+    "embedder": "ollama / nomic-embed-text",
+    "retrieval": "híbrido semántico + BM25",
+    "preguntas": 12,
+    "nota": "Solo cambia el LLM generativo; se conserva el mismo corpus, chunking, retrieval, vector store y embeddings."
+  },
+  "metricas": {
+    "avg_llm_latency_s": "Latencia media registrada por el adapter del modelo generativo.",
+    "avg_end_to_end_s": "Tiempo medio completo medido por el script por pregunta, incluyendo retrieval, composición y generación.",
+    "avg_tokens_per_sec": "Velocidad media de generación registrada por el adapter.",
+    "mean_source_recall": "Proporción media de fuentes esperadas recuperadas por el agente.",
+    "out_of_scope_accuracy": "Acierto en preguntas fuera de ámbito: debe rechazar sin inventar."
+  },
+  "runs": [
+    {
+      "summary": {
+        "provider": "Ollama local",
+        "model": "qwen2.5:3b",
+        "label": "local_qwen",
+        "source_file": "run_local_qwen_20260529_000447.json",
+        "vector_store_provider": "faiss",
+        "embedder_provider": "ollama",
+        "questions_total": 12,
+        "questions_successful": 12,
+        "avg_llm_latency_s": 5.1858,
+        "avg_end_to_end_s": 7.8483,
+        "avg_tokens_per_sec": 60.4633,
+        "mean_source_recall": 0.95,
+        "out_of_scope_accuracy": 1.0,
+        "total_elapsed_s": 94.18,
+        "subjective_hits": 12,
+        "subjective_fails": 0,
+        "subjective_accuracy": 1.0,
+        "subjective_comment": "Responde correctamente las 12 preguntas y gestiona la contradicción horaria."
+      },
+      "results": [
+        {
+          "id": "q01",
+          "categoria": "definicion",
+          "pregunta": "¿Qué es DNI?",
+          "respuesta_referencia": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que desarrolla proyectos sociales como desayunos solidarios, RESIS y COLES.",
+          "respuesta_modelo": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa.",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "fuentes_recuperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 12.35,
+          "metricas": {
+            "prompt_tokens": 414,
+            "output_tokens": 103,
+            "tokens_per_sec": 58.23,
+            "latencia_s": 8.69,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q02",
+          "categoria": "parafrasis",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "respuesta_referencia": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\": detenerse, mirar con empatía y actuar ayudando de forma directa.",
+          "respuesta_modelo": "DNI está guiado por la filosofía \"PARA. MIRA. AYUDA\". Esta filosofía se resume en tres conceptos:\n\n- **PARA**: Detente en tu día a día y observa tu alrededor.\n- **MIRA**: Con empatía a las personas que te rodean.\n- **AYUDA**: Actúa de forma directa para mejorar la vida de otros.\n\nEsta filosofía se basa en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real. DNI promueve el voluntariado sin burocracia, enfatizando la importancia de la observación empática y la acción directa para mejorar la vida de los demás.",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt",
+            "04_filosofia_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "10_proyectos.txt",
+            "09_como_participar.txt",
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 0.5,
+          "rejection_ok": null,
+          "elapsed_s": 10.38,
+          "metricas": {
+            "prompt_tokens": 871,
+            "output_tokens": 162,
+            "tokens_per_sec": 58.39,
+            "latencia_s": 8.11,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q03",
+          "categoria": "desayunos",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "respuesta_referencia": "Los voluntarios se dividen en equipos y recorren zonas de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo también conversación y compañía.",
+          "respuesta_modelo": "Los voluntarios en los desayunos solidarios se reúnen en un punto de encuentro y se dividen en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 8.2,
+          "metricas": {
+            "prompt_tokens": 736,
+            "output_tokens": 80,
+            "tokens_per_sec": 58.8,
+            "latencia_s": 5.91,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q04",
+          "categoria": "desayunos",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "respuesta_referencia": "El punto de encuentro para desayunos es la Porta de la Mar de Valencia.",
+          "respuesta_modelo": "El punto de encuentro siempre es la Porta de la Mar de Valencia. Desde allí repartimos los alimentos por las zonas de Mestalla, el centro, El Carmen o el río entre otros.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt",
+            "15_desayunos_100_preguntas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 7.11,
+          "metricas": {
+            "prompt_tokens": 667,
+            "output_tokens": 46,
+            "tokens_per_sec": 59.22,
+            "latencia_s": 4.87,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q05",
+          "categoria": "contradiccion",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "respuesta_referencia": "Las fuentes contienen versiones distintas: 01_faq_dni.txt indica las 8:00 de la mañana, mientras que 11_horarios_ubicaciones.txt indica normalmente entre las 9:00 y las 12:00 h.",
+          "respuesta_modelo": "Las fuentes contienen varias versiones para esta pregunta, por lo que deben mostrarse todas:\n- Según 01_faq_dni.txt: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).\n- Según 11_horarios_ubicaciones.txt: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.9,
+          "metricas": {
+            "prompt_tokens": 491,
+            "output_tokens": 10,
+            "tokens_per_sec": 65.17,
+            "latencia_s": 3.61,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q06",
+          "categoria": "coles",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "respuesta_referencia": "En el refuerzo escolar se ayuda a niños que viven realidades difíciles mediante repaso, deberes, lectura de cuentos o manualidades según su edad.",
+          "respuesta_modelo": "En el refuerzo escolar de DNI, se realiza la misma actividad que en otros colegios. Se ayuda a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos o a la lectura de cuentos, realización de manualidades etc.\n\nEl refuerzo escolar se realiza los días lunes, martes, miércoles, jueves y viernes de 15:30 a 16:30. \n\nOrganizamos coches desde Valencia o alrededores para que todos los voluntarios tengan modo de ir.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.01,
+          "metricas": {
+            "prompt_tokens": 651,
+            "output_tokens": 142,
+            "tokens_per_sec": 58.44,
+            "latencia_s": 6.7,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q07",
+          "categoria": "coles",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "respuesta_referencia": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+          "respuesta_modelo": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "06_coles_refuerzo.txt",
+            "11_horarios_ubicaciones.txt",
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 6.99,
+          "metricas": {
+            "prompt_tokens": 698,
+            "output_tokens": 24,
+            "tokens_per_sec": 60.18,
+            "latencia_s": 4.79,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q08",
+          "categoria": "coles",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "respuesta_referencia": "Para empezar en el refuerzo escolar es indispensable tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario.",
+          "respuesta_modelo": "Sí, necesitas tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario. Este punto se encuentra en los archivos [01_faq_dni.txt] y [06_coles_refuerzo.txt].",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 6.98,
+          "metricas": {
+            "prompt_tokens": 552,
+            "output_tokens": 53,
+            "tokens_per_sec": 59.48,
+            "latencia_s": 4.7,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q09",
+          "categoria": "resis",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "respuesta_referencia": "La residencia La Acollida está cerca de Blasco Ibáñez, en la calle Crevillente 22.",
+          "respuesta_modelo": "En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22. (01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.33,
+          "metricas": {
+            "prompt_tokens": 354,
+            "output_tokens": 39,
+            "tokens_per_sec": 59.78,
+            "latencia_s": 3.66,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q10",
+          "categoria": "resis",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "respuesta_referencia": "La actividad con abuelitos se realiza los miércoles de 17:30 a 18:30.",
+          "respuesta_modelo": "Los miércoles de 17:30 a 18:30. (01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.6,
+          "metricas": {
+            "prompt_tokens": 342,
+            "output_tokens": 29,
+            "tokens_per_sec": 59.75,
+            "latencia_s": 3.33,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q11",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "16_resis_49_preguntas.txt",
+            "15_desayunos_100_preguntas.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 6.1,
+          "metricas": {
+            "prompt_tokens": 571,
+            "output_tokens": 10,
+            "tokens_per_sec": 65.3,
+            "latencia_s": 3.94,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q12",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "16_resis_49_preguntas.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 6.23,
+          "metricas": {
+            "prompt_tokens": 607,
+            "output_tokens": 10,
+            "tokens_per_sec": 62.82,
+            "latencia_s": 3.92,
+            "modelo": "qwen2.5:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        }
+      ]
+    },
+    {
+      "summary": {
+        "provider": "Ollama local",
+        "model": "llama3.2:3b",
+        "label": "local_llama",
+        "source_file": "run_local_llama_20260529_000701.json",
+        "vector_store_provider": "faiss",
+        "embedder_provider": "ollama",
+        "questions_total": 12,
+        "questions_successful": 12,
+        "avg_llm_latency_s": 7.9933,
+        "avg_end_to_end_s": 10.3742,
+        "avg_tokens_per_sec": 58.6225,
+        "mean_source_recall": 0.95,
+        "out_of_scope_accuracy": 1.0,
+        "total_elapsed_s": 124.51,
+        "subjective_hits": 10,
+        "subjective_fails": 2,
+        "subjective_accuracy": 0.8333,
+        "subjective_comment": "Obtiene buenas métricas automáticas, pero sobredetecta contradicciones en dos respuestas."
+      },
+      "results": [
+        {
+          "id": "q01",
+          "categoria": "definicion",
+          "pregunta": "¿Qué es DNI?",
+          "respuesta_referencia": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que desarrolla proyectos sociales como desayunos solidarios, RESIS y COLES.",
+          "respuesta_modelo": "Según el contexto proporcionado, la respuesta a la pregunta \"¿Qué es DNI?\" es:\n\nDNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\".",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "fuentes_recuperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 41.06,
+          "metricas": {
+            "prompt_tokens": 408,
+            "output_tokens": 59,
+            "tokens_per_sec": 58.16,
+            "latencia_s": 38.75,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q02",
+          "categoria": "parafrasis",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "respuesta_referencia": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\": detenerse, mirar con empatía y actuar ayudando de forma directa.",
+          "respuesta_modelo": "La idea o filosofía que guía a DNI se resume en \"PARA. MIRA. AYUDA\". Esta filosofía se basa en tres principios:\n\n1.  PARA: detente en tu día a día y observa tu alrededor.\n2.  MIRA: con empatía a las personas que te rodean.\n3.  AYUDA: actúa de forma directa para mejorar la vida de otros.\n\nEsta filosofía se basa en el voluntariado sin burocracia, basado en la ilusión de jóvenes de 18-25 años que quieren generar impacto social real.",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt",
+            "04_filosofia_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "10_proyectos.txt",
+            "09_como_participar.txt",
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 0.5,
+          "rejection_ok": null,
+          "elapsed_s": 11.14,
+          "metricas": {
+            "prompt_tokens": 859,
+            "output_tokens": 143,
+            "tokens_per_sec": 55.62,
+            "latencia_s": 7.52,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q03",
+          "categoria": "desayunos",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "respuesta_referencia": "Los voluntarios se dividen en equipos y recorren zonas de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo también conversación y compañía.",
+          "respuesta_modelo": "Según el contexto, se menciona que \"La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar.\" (Archivos: 01_faq_dni.txt, 07_desayunos_logistica.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 8.47,
+          "metricas": {
+            "prompt_tokens": 729,
+            "output_tokens": 83,
+            "tokens_per_sec": 56.25,
+            "latencia_s": 6.15,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q04",
+          "categoria": "desayunos",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "respuesta_referencia": "El punto de encuentro para desayunos es la Porta de la Mar de Valencia.",
+          "respuesta_modelo": "Según las fuentes proporcionadas, el punto de encuentro para participar en desayunos es la Porta de la Mar de Valencia. Sin embargo, se indica que desde allí se reparten alimentos por diferentes zonas de Valencia (Mestalla, centro, El Carmen o río entre otros).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt",
+            "15_desayunos_100_preguntas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 7.64,
+          "metricas": {
+            "prompt_tokens": 656,
+            "output_tokens": 65,
+            "tokens_per_sec": 56.65,
+            "latencia_s": 5.23,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q05",
+          "categoria": "contradiccion",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "respuesta_referencia": "Las fuentes contienen versiones distintas: 01_faq_dni.txt indica las 8:00 de la mañana, mientras que 11_horarios_ubicaciones.txt indica normalmente entre las 9:00 y las 12:00 h.",
+          "respuesta_modelo": "Las fuentes contienen varias versiones para esta pregunta, por lo que deben mostrarse todas:\n- Según 01_faq_dni.txt: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).\n- Según 11_horarios_ubicaciones.txt: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.93,
+          "metricas": {
+            "prompt_tokens": 479,
+            "output_tokens": 10,
+            "tokens_per_sec": 65.82,
+            "latencia_s": 3.63,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q06",
+          "categoria": "coles",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "respuesta_referencia": "En el refuerzo escolar se ayuda a niños que viven realidades difíciles mediante repaso, deberes, lectura de cuentos o manualidades según su edad.",
+          "respuesta_modelo": "Según la información disponible, en el refuerzo escolar de Nuestra Ilusión (DNI) Valencia, se realizan actividades enfocadas en ayudar a niños que viven realidades difíciles. Dependiendo de la edad del niño, el voluntariado puede incluir:\n\n* Clases enfocadas al repaso de deberes o conceptos\n* Lectura de cuentos\n* Realización de manualidades\n\nNo tengo información específica sobre las actividades exactas que se realizan en cada refuerzo escolar.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 8.59,
+          "metricas": {
+            "prompt_tokens": 634,
+            "output_tokens": 115,
+            "tokens_per_sec": 55.72,
+            "latencia_s": 6.3,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q07",
+          "categoria": "coles",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "respuesta_referencia": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+          "respuesta_modelo": "Según las fuentes disponibles, hay información contradictoria sobre el lugar donde se realiza el refuerzo escolar. En [01_faq_dni.txt] y [06_coles_refuerzo.txt], se indica que es en el CEIP Antonio Ferrandis de la Coma Valencia. Por otro lado, en [11_horarios_ubicaciones.txt], se menciona una biblioteca tutorizada en Valencia como ubicación del refuerzo escolar (COLES), pero con horarios y detalles específicos que se facilitan al contactar al número 647 440 275.\n\nNo tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "06_coles_refuerzo.txt",
+            "11_horarios_ubicaciones.txt",
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.07,
+          "metricas": {
+            "prompt_tokens": 683,
+            "output_tokens": 132,
+            "tokens_per_sec": 55.15,
+            "latencia_s": 6.89,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "FALLO",
+          "observacion": "Detecta una supuesta contradicción de ubicación y termina rechazando la respuesta, aunque dispone de la ubicación esperada."
+        },
+        {
+          "id": "q08",
+          "categoria": "coles",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "respuesta_referencia": "Para empezar en el refuerzo escolar es indispensable tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario.",
+          "respuesta_modelo": "Según las fuentes disponibles, parece que hay información contradictoria sobre la documentación necesaria para participar en el refuerzo escolar. En [01_faq_dni.txt] se indica que es necesario tener \"el certificado de delitos sexuales en vigor\" y rellenar \"el seguro del voluntario\", mientras que en [06_coles_refuerzo.txt] solo se menciona la necesidad de tener \"el certificado de delitos sexuales en vigor\". Ambas fuentes coinciden en que es necesario este certificado, pero no coinciden en el requisito del seguro del voluntario.\n\nPor lo tanto, no puedo proporcionar una respuesta definitiva sin más información.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 8.7,
+          "metricas": {
+            "prompt_tokens": 543,
+            "output_tokens": 144,
+            "tokens_per_sec": 55.46,
+            "latencia_s": 6.43,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "FALLO",
+          "observacion": "Presenta como contradicción la documentación recuperada y no ofrece la respuesta definitiva esperada."
+        },
+        {
+          "id": "q09",
+          "categoria": "resis",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "respuesta_referencia": "La residencia La Acollida está cerca de Blasco Ibáñez, en la calle Crevillente 22.",
+          "respuesta_modelo": "La residencia La Acollida se encuentra en la calle Crevillente 22, muy cerca de Blasco Ibáñez. (01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.76,
+          "metricas": {
+            "prompt_tokens": 348,
+            "output_tokens": 38,
+            "tokens_per_sec": 57.29,
+            "latencia_s": 3.61,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q10",
+          "categoria": "resis",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "respuesta_referencia": "La actividad con abuelitos se realiza los miércoles de 17:30 a 18:30.",
+          "respuesta_modelo": "Según el contexto proporcionado, los miércoles son los días en que se realiza la actividad con abuelitos. (01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.67,
+          "metricas": {
+            "prompt_tokens": 333,
+            "output_tokens": 34,
+            "tokens_per_sec": 58.76,
+            "latencia_s": 3.41,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q11",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "16_resis_49_preguntas.txt",
+            "15_desayunos_100_preguntas.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 6.07,
+          "metricas": {
+            "prompt_tokens": 557,
+            "output_tokens": 10,
+            "tokens_per_sec": 63.85,
+            "latencia_s": 3.9,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q12",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "16_resis_49_preguntas.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 6.39,
+          "metricas": {
+            "prompt_tokens": 590,
+            "output_tokens": 10,
+            "tokens_per_sec": 64.74,
+            "latencia_s": 4.1,
+            "modelo": "llama3.2:3b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        }
+      ]
+    },
+    {
+      "summary": {
+        "provider": "PoliGPT",
+        "model": "gemma3:27b",
+        "label": "poligpt_gemma27b",
+        "source_file": "run_poligpt_gemma27b_20260529_175035.json",
+        "vector_store_provider": "faiss",
+        "embedder_provider": "ollama",
+        "questions_total": 12,
+        "questions_successful": 12,
+        "avg_llm_latency_s": 2.2067,
+        "avg_end_to_end_s": 4.7592,
+        "avg_tokens_per_sec": 282.5058,
+        "mean_source_recall": 0.95,
+        "out_of_scope_accuracy": 1.0,
+        "total_elapsed_s": 57.11,
+        "subjective_hits": 12,
+        "subjective_fails": 0,
+        "subjective_accuracy": 1.0,
+        "subjective_comment": "Responde correctamente las 12 preguntas y mantiene la respuesta principal cuando aparece información alternativa."
+      },
+      "results": [
+        {
+          "id": "q01",
+          "categoria": "definicion",
+          "pregunta": "¿Qué es DNI?",
+          "respuesta_referencia": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que desarrolla proyectos sociales como desayunos solidarios, RESIS y COLES.",
+          "respuesta_modelo": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\". Somos +400 voluntarios activos que realizamos proyectos sociales como desayunos solidarios para personas sin hogar, actividades con ancianos (RESIS) y refuerzo escolar (COLES). Nuestra misión es acompañar a quien lo necesita con empatía y acción directa. (08_preguntas_basicas.txt)",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "fuentes_recuperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 7.99,
+          "metricas": {
+            "prompt_tokens": 359,
+            "output_tokens": 98,
+            "tokens_per_sec": 142.84,
+            "latencia_s": 3.2,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q02",
+          "categoria": "parafrasis",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "respuesta_referencia": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\": detenerse, mirar con empatía y actuar ayudando de forma directa.",
+          "respuesta_modelo": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\". Esto implica detenerse, observar con empatía y actuar para mejorar la vida de otros. DNI cree en el voluntariado sin burocracia, impulsado por jóvenes de 18 a 25 años que buscan generar un impacto social real. (08_preguntas_basicas.txt) Además, el nombre \"Damos Nuestra Ilusión\" representa la idea de compartir esperanza, alegría y motivación, no solo alimentos. (15_desayunos_100_preguntas.txt)",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt",
+            "04_filosofia_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "10_proyectos.txt",
+            "09_como_participar.txt",
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 0.5,
+          "rejection_ok": null,
+          "elapsed_s": 5.54,
+          "metricas": {
+            "prompt_tokens": 770,
+            "output_tokens": 127,
+            "tokens_per_sec": 271.1,
+            "latencia_s": 3.31,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q03",
+          "categoria": "desayunos",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "respuesta_referencia": "Los voluntarios se dividen en equipos y recorren zonas de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo también conversación y compañía.",
+          "respuesta_modelo": "La actividad consiste en que un grupo de voluntarios se reúne en un punto de encuentro y se divide en equipos. Cada equipo recorre una zona de Valencia repartiendo desayunos o cenas a personas sin hogar. Lo más importante no es solo la comida, sino el tiempo que se comparte con ellos, ofreciéndoles conversación y compañía. (07_desayunos_logistica.txt, 01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.06,
+          "metricas": {
+            "prompt_tokens": 666,
+            "output_tokens": 90,
+            "tokens_per_sec": 294.05,
+            "latencia_s": 2.57,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q04",
+          "categoria": "desayunos",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "respuesta_referencia": "El punto de encuentro para desayunos es la Porta de la Mar de Valencia.",
+          "respuesta_modelo": "El punto de encuentro siempre es la Porta de la Mar de Valencia (01_faq_dni.txt, 07_desayunos_logistica.txt, 15_desayunos_100_preguntas.txt). Está bien comunicado con bus y metro (15_desayunos_100_preguntas.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt",
+            "15_desayunos_100_preguntas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 4.81,
+          "metricas": {
+            "prompt_tokens": 598,
+            "output_tokens": 78,
+            "tokens_per_sec": 285.62,
+            "latencia_s": 2.37,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q05",
+          "categoria": "contradiccion",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "respuesta_referencia": "Las fuentes contienen versiones distintas: 01_faq_dni.txt indica las 8:00 de la mañana, mientras que 11_horarios_ubicaciones.txt indica normalmente entre las 9:00 y las 12:00 h.",
+          "respuesta_modelo": "Las fuentes contienen varias versiones para esta pregunta, por lo que deben mostrarse todas:\n- Según 01_faq_dni.txt: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).\n- Según 11_horarios_ubicaciones.txt: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.33,
+          "metricas": {
+            "prompt_tokens": 438,
+            "output_tokens": 114,
+            "tokens_per_sec": 190.31,
+            "latencia_s": 2.9,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q06",
+          "categoria": "coles",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "respuesta_referencia": "En el refuerzo escolar se ayuda a niños que viven realidades difíciles mediante repaso, deberes, lectura de cuentos o manualidades según su edad.",
+          "respuesta_modelo": "En actividades de refuerzo escolar vamos a un colegio a ayudar a niños que viven realidades difíciles. Dependiendo de la edad, el voluntariado es más de clases enfocadas al repaso de deberes o de conceptos, o a la lectura de cuentos, realización de manualidades, etc. (01_faq_dni.txt, 06_coles_refuerzo.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 4.79,
+          "metricas": {
+            "prompt_tokens": 580,
+            "output_tokens": 83,
+            "tokens_per_sec": 268.99,
+            "latencia_s": 2.46,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q07",
+          "categoria": "coles",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "respuesta_referencia": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+          "respuesta_modelo": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia (01_faq_dni.txt, 06_coles_refuerzo.txt). Sin embargo, también se indica que se realiza en una biblioteca tutorizada en Valencia, con ubicación y horarios específicos que se facilitan al apuntarse (11_horarios_ubicaciones.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "06_coles_refuerzo.txt",
+            "11_horarios_ubicaciones.txt",
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 4.71,
+          "metricas": {
+            "prompt_tokens": 622,
+            "output_tokens": 84,
+            "tokens_per_sec": 287.06,
+            "latencia_s": 2.46,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q08",
+          "categoria": "coles",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "respuesta_referencia": "Para empezar en el refuerzo escolar es indispensable tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario.",
+          "respuesta_modelo": "Sí, para empezar es indispensable tener el certificado de delitos sexuales en vigor así como rellenar el seguro del voluntario (01_faq_dni.txt, 06_coles_refuerzo.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 4.26,
+          "metricas": {
+            "prompt_tokens": 491,
+            "output_tokens": 48,
+            "tokens_per_sec": 295.06,
+            "latencia_s": 1.83,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q09",
+          "categoria": "resis",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "respuesta_referencia": "La residencia La Acollida está cerca de Blasco Ibáñez, en la calle Crevillente 22.",
+          "respuesta_modelo": "En la residencia La Acollida, muy cerca de Blasco Ibáñez en la calle Crevillente 22. (01_faq_dni.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 3.81,
+          "metricas": {
+            "prompt_tokens": 306,
+            "output_tokens": 37,
+            "tokens_per_sec": 222.1,
+            "latencia_s": 1.54,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q10",
+          "categoria": "resis",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "respuesta_referencia": "La actividad con abuelitos se realiza los miércoles de 17:30 a 18:30.",
+          "respuesta_modelo": "Los miércoles de 17:30 a 18:30 (01_faq_dni.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 3.79,
+          "metricas": {
+            "prompt_tokens": 301,
+            "output_tokens": 27,
+            "tokens_per_sec": 233.52,
+            "latencia_s": 1.4,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q11",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "16_resis_49_preguntas.txt",
+            "15_desayunos_100_preguntas.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 3.43,
+          "metricas": {
+            "prompt_tokens": 517,
+            "output_tokens": 9,
+            "tokens_per_sec": 432.81,
+            "latencia_s": 1.22,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q12",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "16_resis_49_preguntas.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 3.59,
+          "metricas": {
+            "prompt_tokens": 558,
+            "output_tokens": 9,
+            "tokens_per_sec": 466.61,
+            "latencia_s": 1.22,
+            "modelo": "gemma3:27b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        }
+      ]
+    },
+    {
+      "summary": {
+        "provider": "PoliGPT",
+        "model": "llama3.3:70b",
+        "label": "poligpt_llama70b",
+        "source_file": "run_poligpt_llama70b_20260529_175755.json",
+        "vector_store_provider": "faiss",
+        "embedder_provider": "ollama",
+        "questions_total": 12,
+        "questions_successful": 12,
+        "avg_llm_latency_s": 6.0333,
+        "avg_end_to_end_s": 8.5075,
+        "avg_tokens_per_sec": 130.4167,
+        "mean_source_recall": 0.95,
+        "out_of_scope_accuracy": 1.0,
+        "total_elapsed_s": 102.1,
+        "subjective_hits": 12,
+        "subjective_fails": 0,
+        "subjective_accuracy": 1.0,
+        "subjective_comment": "Responde correctamente las 12 preguntas, aunque con mayor tiempo de ejecución que gemma3:27b."
+      },
+      "results": [
+        {
+          "id": "q01",
+          "categoria": "definicion",
+          "pregunta": "¿Qué es DNI?",
+          "respuesta_referencia": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que desarrolla proyectos sociales como desayunos solidarios, RESIS y COLES.",
+          "respuesta_modelo": "DNI (Damos Nuestra Ilusión) es una asociación de jóvenes voluntarios en Valencia con el lema \"PARA. MIRA. AYUDA\" que realiza proyectos sociales como desayunos solidarios, actividades con ancianos y refuerzo escolar, con el objetivo de acompañar a quien lo necesita con empatía y acción directa (08_preguntas_basicas.txt).",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "fuentes_recuperadas": [
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 12.41,
+          "metricas": {
+            "prompt_tokens": 418,
+            "output_tokens": 88,
+            "tokens_per_sec": 57.86,
+            "latencia_s": 8.75,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q02",
+          "categoria": "parafrasis",
+          "pregunta": "Explícame cuál es la idea o filosofía que guía a DNI.",
+          "respuesta_referencia": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\": detenerse, mirar con empatía y actuar ayudando de forma directa.",
+          "respuesta_modelo": "La filosofía de DNI se resume en \"PARA. MIRA. AYUDA\", lo que significa detenerse en el día a día, observar con empatía a las personas que te rodean y actuar de forma directa para mejorar la vida de otros, basado en la ilusión de jóvenes que quieren generar impacto social real (08_preguntas_basicas.txt). Además, el nombre \"Damos Nuestra Ilusión\" representa la idea de compartir no solo alimentos, sino también esperanza, alegría y motivación (15_desayunos_100_preguntas.txt).",
+          "fuentes_esperadas": [
+            "08_preguntas_basicas.txt",
+            "04_filosofia_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "10_proyectos.txt",
+            "09_como_participar.txt",
+            "08_preguntas_basicas.txt"
+          ],
+          "source_recall": 0.5,
+          "rejection_ok": null,
+          "elapsed_s": 13.58,
+          "metricas": {
+            "prompt_tokens": 869,
+            "output_tokens": 134,
+            "tokens_per_sec": 88.97,
+            "latencia_s": 11.27,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q03",
+          "categoria": "desayunos",
+          "pregunta": "¿Qué hacen los voluntarios en los desayunos solidarios?",
+          "respuesta_referencia": "Los voluntarios se dividen en equipos y recorren zonas de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo también conversación y compañía.",
+          "respuesta_modelo": "Los voluntarios se reúnen en un punto de encuentro, se dividen en equipos y recorren una zona de Valencia repartiendo desayunos o cenas a personas sin hogar, compartiendo tiempo con ellos y ofreciéndoles conversación y compañía (01_faq_dni.txt, 07_desayunos_logistica.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.61,
+          "metricas": {
+            "prompt_tokens": 739,
+            "output_tokens": 76,
+            "tokens_per_sec": 114.3,
+            "latencia_s": 7.13,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q04",
+          "categoria": "desayunos",
+          "pregunta": "¿Dónde queda el punto de encuentro para participar en desayunos?",
+          "respuesta_referencia": "El punto de encuentro para desayunos es la Porta de la Mar de Valencia.",
+          "respuesta_modelo": "El punto de encuentro para participar en desayunos es la Porta de la Mar (también mencionada como Puerta de la Mar) de Valencia ( [01_faq_dni.txt], [07_desayunos_logistica.txt], [15_desayunos_100_preguntas.txt] ).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "07_desayunos_logistica.txt",
+            "15_desayunos_100_preguntas.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 8.38,
+          "metricas": {
+            "prompt_tokens": 666,
+            "output_tokens": 67,
+            "tokens_per_sec": 120.53,
+            "latencia_s": 6.08,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q05",
+          "categoria": "contradiccion",
+          "pregunta": "¿A qué hora son los desayunos solidarios?",
+          "respuesta_referencia": "Las fuentes contienen versiones distintas: 01_faq_dni.txt indica las 8:00 de la mañana, mientras que 11_horarios_ubicaciones.txt indica normalmente entre las 9:00 y las 12:00 h.",
+          "respuesta_modelo": "Las fuentes contienen varias versiones para esta pregunta, por lo que deben mostrarse todas:\n- Según 01_faq_dni.txt: Los desayunos son a las 8 de la mañana y las cenas a las ocho y media de la tarde (20:30).\n- Según 11_horarios_ubicaciones.txt: Los desayunos solidarios suelen ser los fines de semana (sábados o domingos) por la mañana temprano, típicamente entre las 9:00-12:00h. La hora exacta varía según la zona donde vayamos y la coordinación con las personas sin hogar. Nos gusta madrugar un poco para llegar cuando la gente está despertando. Te avisaremos con antelación del punto de encuentro y hora exacta en el grupo de WhatsApp.",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "11_horarios_ubicaciones.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.83,
+          "metricas": {
+            "prompt_tokens": 489,
+            "output_tokens": 118,
+            "tokens_per_sec": 80.83,
+            "latencia_s": 7.51,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q06",
+          "categoria": "coles",
+          "pregunta": "¿Qué se hace en el refuerzo escolar de DNI?",
+          "respuesta_referencia": "En el refuerzo escolar se ayuda a niños que viven realidades difíciles mediante repaso, deberes, lectura de cuentos o manualidades según su edad.",
+          "respuesta_modelo": "En el refuerzo escolar de DNI, se va a un colegio a ayudar a niños que viven realidades difíciles, y dependiendo de la edad, el voluntariado se enfoca en repasar deberes o conceptos, o en actividades como la lectura de cuentos y la realización de manualidades (01_faq_dni.txt, 06_coles_refuerzo.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 9.32,
+          "metricas": {
+            "prompt_tokens": 644,
+            "output_tokens": 88,
+            "tokens_per_sec": 105.83,
+            "latencia_s": 6.92,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q07",
+          "categoria": "coles",
+          "pregunta": "¿Dónde se realiza el refuerzo escolar?",
+          "respuesta_referencia": "El refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia.",
+          "respuesta_modelo": "La información sobre la ubicación del refuerzo escolar es contradictoria. Según los archivos [06_coles_refuerzo.txt] y [01_faq_dni.txt], el refuerzo escolar se realiza en el CEIP Antonio Ferrandis de la Coma, Valencia. Sin embargo, el archivo [11_horarios_ubicaciones.txt] indica que el refuerzo escolar (COLES) se realiza en una biblioteca tutorizada en Valencia, sin especificar la ubicación exacta. (06_coles_refuerzo.txt, 01_faq_dni.txt, 11_horarios_ubicaciones.txt)",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "fuentes_recuperadas": [
+            "06_coles_refuerzo.txt",
+            "11_horarios_ubicaciones.txt",
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 12.13,
+          "metricas": {
+            "prompt_tokens": 693,
+            "output_tokens": 134,
+            "tokens_per_sec": 84.05,
+            "latencia_s": 9.84,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q08",
+          "categoria": "coles",
+          "pregunta": "¿Necesito alguna documentación para participar en el refuerzo escolar?",
+          "respuesta_referencia": "Para empezar en el refuerzo escolar es indispensable tener el certificado de delitos sexuales en vigor y rellenar el seguro del voluntario.",
+          "respuesta_modelo": "Sí, necesitas documentación para participar en el refuerzo escolar, específicamente el certificado de delitos sexuales en vigor y el seguro del voluntario (01_faq_dni.txt, 06_coles_refuerzo.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 7.31,
+          "metricas": {
+            "prompt_tokens": 553,
+            "output_tokens": 53,
+            "tokens_per_sec": 125.35,
+            "latencia_s": 4.83,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q09",
+          "categoria": "resis",
+          "pregunta": "¿Dónde está la residencia La Acollida?",
+          "respuesta_referencia": "La residencia La Acollida está cerca de Blasco Ibáñez, en la calle Crevillente 22.",
+          "respuesta_modelo": "La residencia La Acollida está ubicada en la calle Crevillente 22, muy cerca de Blasco Ibáñez (01_faq_dni.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 5.08,
+          "metricas": {
+            "prompt_tokens": 358,
+            "output_tokens": 38,
+            "tokens_per_sec": 142.27,
+            "latencia_s": 2.78,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q10",
+          "categoria": "resis",
+          "pregunta": "¿Qué días se hace la actividad con abuelitos?",
+          "respuesta_referencia": "La actividad con abuelitos se realiza los miércoles de 17:30 a 18:30.",
+          "respuesta_modelo": "Los miércoles (01_faq_dni.txt).",
+          "fuentes_esperadas": [
+            "01_faq_dni.txt"
+          ],
+          "fuentes_recuperadas": [
+            "01_faq_dni.txt"
+          ],
+          "source_recall": 1.0,
+          "rejection_ok": null,
+          "elapsed_s": 4.01,
+          "metricas": {
+            "prompt_tokens": 343,
+            "output_tokens": 13,
+            "tokens_per_sec": 233.8,
+            "latencia_s": 1.52,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q11",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Cuánto cuesta alquilar un piso en Valencia?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "16_resis_49_preguntas.txt",
+            "15_desayunos_100_preguntas.txt",
+            "06_coles_refuerzo.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 5.04,
+          "metricas": {
+            "prompt_tokens": 567,
+            "output_tokens": 10,
+            "tokens_per_sec": 203.82,
+            "latencia_s": 2.83,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        },
+        {
+          "id": "q12",
+          "categoria": "fuera_de_ambito",
+          "pregunta": "¿Qué becas universitarias puedo solicitar este curso?",
+          "respuesta_referencia": "No tengo esa información en mis fuentes.",
+          "respuesta_modelo": "No tengo esa información en mis fuentes.",
+          "fuentes_esperadas": [],
+          "fuentes_recuperadas": [
+            "15_desayunos_100_preguntas.txt",
+            "16_resis_49_preguntas.txt"
+          ],
+          "source_recall": null,
+          "rejection_ok": true,
+          "elapsed_s": 5.39,
+          "metricas": {
+            "prompt_tokens": 600,
+            "output_tokens": 10,
+            "tokens_per_sec": 207.39,
+            "latencia_s": 2.94,
+            "modelo": "llama3.3:70b"
+          },
+          "calidad_subjetiva": "ACIERTO",
+          "observacion": ""
+        }
+      ]
+    }
+  ]
+}
