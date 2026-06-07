@@ -4,6 +4,83 @@ Proyecto de la asignatura **Inteligencia Artificial** del Grado en Tecnologías 
 
 El sistema implementa un agente RAG capaz de responder preguntas sobre la asociación **DNI (Damos Nuestra Ilusión)** utilizando únicamente el corpus oficial proporcionado. El agente recupera información relevante, genera una respuesta fundamentada, cita los archivos fuente utilizados y rechaza preguntas cuya respuesta no aparece en sus fuentes.
 
+## Guía rápida para la defensa
+
+Esta es la secuencia mínima para clonar el repositorio y levantar el agente durante la presentación.
+
+### 1. Clonar el repositorio
+
+```powershell
+git clone https://github.com/JaviSerMar/tarea_agentes.git
+cd tarea_agentes
+```
+
+### 2. Crear y activar el entorno virtual
+
+```powershell
+python -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+### 3. Preparar Ollama
+
+La configuración final del proyecto utiliza Ollama local, por lo que no es necesario conectarse a la VPN de la UPV para ejecutar la demo principal.
+
+Antes de lanzar el agente, Ollama debe estar abierto y deben estar disponibles estos modelos:
+
+```powershell
+ollama pull qwen2.5:3b
+ollama pull nomic-embed-text
+```
+
+El modelo `qwen2.5:3b` se usa para generar respuestas y `nomic-embed-text` para embeddings locales.
+
+### 4. Comprobar que el agente responde
+
+```powershell
+python consultar.py "¿Qué es DNI?"
+```
+
+Esta consulta debe devolver una respuesta sobre DNI y citar como fuente `08_preguntas_basicas.txt`.
+
+### 5. Lanzar el frontend Streamlit
+
+```powershell
+python -m streamlit run streamlit_app.py
+```
+
+Después, abrir en el navegador la URL local indicada por Streamlit, normalmente:
+
+```text
+http://localhost:8501
+```
+
+### 6. Consultas recomendadas para la defensa
+
+```text
+¿Qué es DNI?
+¿A qué hora son los desayunos solidarios?
+¿Cuánto cuesta alquilar un piso en Valencia?
+```
+
+Estas tres consultas permiten demostrar:
+
+* respuesta factual con fuente documental;
+* gestión de una contradicción real del corpus;
+* rechazo de una pregunta fuera del ámbito DNI.
+
+### 7. Notas importantes
+
+La demo final no depende de PoliGPT ni de la VPN de la UPV. PoliGPT se utilizó únicamente para el benchmark y la evaluación RAGAs, no para la ejecución final recomendada.
+
+No es necesario ejecutar el benchmark ni RAGAs durante la presentación, ya que sus resultados están incluidos en `benchmark/` y `evaluacion/`.
+
+El contrato oficial de corrección sigue siendo la función `consultar` de `consultar.py`. El frontend Streamlit es un extra funcional para facilitar la demostración.
+
+
+
 ## Funcionalidades implementadas
 
 La solución implementa las bandas 5, 6, 7, 8 y 10 de la práctica:
