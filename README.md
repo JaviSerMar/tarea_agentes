@@ -6,7 +6,7 @@ El sistema implementa un agente RAG capaz de responder preguntas sobre la asocia
 
 ## Setup del proyecto
 
-Esta es la secuencia para clonar el repositorio y levantar el agente.
+Esta es la secuencia mínima para clonar el repositorio, instalar dependencias, preparar Ollama y levantar el agente durante la defensa.
 
 ### 1. Clonar el repositorio
 
@@ -24,20 +24,64 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 python -m pip install -r requirements.txt
 ```
 
-### 3. Preparar Ollama
+### 3. Instalar Ollama, si no está instalado
 
-La configuración final del proyecto utiliza Ollama local, por lo que no es necesario conectarse a la VPN de la UPV para ejecutar la demo principal.
+La configuración final del proyecto utiliza Ollama local, por lo que el equipo donde se ejecute la demo debe tener Ollama instalado.
 
-Antes de lanzar el agente, Ollama debe estar abierto y deben estar disponibles estos modelos:
+Descargar Ollama desde la web oficial:
+
+```text
+https://ollama.com/download
+```
+
+Opción rápida desde PowerShell:
+
+```powershell
+irm https://ollama.com/install.ps1 | iex
+```
+
+Después de instalarlo, abrir Ollama y comprobar desde PowerShell que está disponible:
+
+```powershell
+ollama --version
+```
+
+### 4. Preparar los modelos de Ollama
+
+La demo final no necesita VPN de la UPV, porque utiliza Ollama local.
+
+Antes de lanzar el agente, deben estar disponibles estos modelos:
 
 ```powershell
 ollama pull qwen2.5:3b
 ollama pull nomic-embed-text
 ```
 
-El modelo `qwen2.5:3b` se usa para generar respuestas y `nomic-embed-text` para embeddings locales.
+Comprobar que los modelos están instalados:
 
-### 4. Comprobar que el agente responde
+```powershell
+ollama list
+```
+
+El modelo `qwen2.5:3b` se usa para generar respuestas y `nomic-embed-text` para generar embeddings locales.
+
+### 5. Verificaciones rápidas del proyecto
+
+Con el entorno virtual activado, ejecutar:
+
+```powershell
+python -m json.tool features.json > $null
+python -m py_compile streamlit_app.py
+python -m pytest -q
+```
+
+Resultado esperado:
+
+```text
+54 tests correctos
+```
+
+### 6. Comprobar que el agente responde
 
 ```powershell
 python consultar.py "¿Qué es DNI?"
@@ -45,7 +89,7 @@ python consultar.py "¿Qué es DNI?"
 
 Esta consulta debe devolver una respuesta sobre DNI y citar como fuente `08_preguntas_basicas.txt`.
 
-### 5. Lanzar el frontend Streamlit
+### 7. Lanzar el frontend Streamlit
 
 ```powershell
 python -m streamlit run streamlit_app.py
@@ -57,7 +101,7 @@ Después, abrir en el navegador la URL local indicada por Streamlit, normalmente
 http://localhost:8501
 ```
 
-### 6. Consultas recomendadas para la defensa
+### 8. Consultas recomendadas para la defensa
 
 ```text
 ¿Qué es DNI?
@@ -67,18 +111,17 @@ http://localhost:8501
 
 Estas tres consultas permiten demostrar:
 
-* respuesta factual con fuente documental;
-* gestión de una contradicción real del corpus;
-* rechazo de una pregunta fuera del ámbito DNI.
+- respuesta factual con fuente documental;
+- gestión de una contradicción real del corpus;
+- rechazo de una pregunta fuera del ámbito DNI.
 
-### 7. Notas importantes
+### 9. Notas importantes
 
 La demo final no depende de PoliGPT ni de la VPN de la UPV. PoliGPT se utilizó únicamente para el benchmark y la evaluación RAGAs, no para la ejecución final recomendada.
 
 No es necesario ejecutar el benchmark ni RAGAs durante la presentación, ya que sus resultados están incluidos en `benchmark/` y `evaluacion/`.
 
 El contrato oficial de corrección sigue siendo la función `consultar` de `consultar.py`. El frontend Streamlit es un extra funcional para facilitar la demostración.
-
 
 
 ## Funcionalidades implementadas
@@ -196,13 +239,11 @@ Cuando el corpus contiene versiones contradictorias, como el horario de los desa
 - Windows 10 o sistema compatible.
 - Python 3.11.
 - Ollama instalado y en ejecución.
-- Modelos Ollama necesarios:
-
-```powershell
-ollama pull qwen2.5:3b
-ollama pull llama3.2:3b
-ollama pull nomic-embed-text
-```
+- Modelos Ollama necesarios para la configuración final:
+````markdown
+  - `qwen2.5:3b`
+  - `nomic-embed-text`
+````
 
 Para utilizar PoliGPT fuera del campus se requiere conexión a la VPN de la UPV y una clave privada configurada únicamente en `.env`.
 
