@@ -4,9 +4,9 @@ Proyecto de la asignatura **Inteligencia Artificial** del Grado en Tecnologías 
 
 El sistema implementa un agente RAG capaz de responder preguntas sobre la asociación **DNI (Damos Nuestra Ilusión)** utilizando únicamente el corpus oficial proporcionado. El agente recupera información relevante, genera una respuesta fundamentada, cita los archivos fuente utilizados y rechaza preguntas cuya respuesta no aparece en sus fuentes.
 
-## Guía rápida para la defensa
+## Setup del proyecto
 
-Esta es la secuencia mínima para clonar el repositorio y levantar el agente durante la presentación.
+Esta es la secuencia para clonar el repositorio y levantar el agente.
 
 ### 1. Clonar el repositorio
 
@@ -208,22 +208,14 @@ Para utilizar PoliGPT fuera del campus se requiere conexión a la VPN de la UPV 
 
 ## Instalación en Windows / PowerShell
 
-Desde la raíz del proyecto:
+La instalación completa para la defensa está resumida al inicio del documento, en la sección **Guía rápida para la defensa**.
 
-```powershell
-python -m venv .venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-```
+De forma general, el proyecto se ejecuta creando un entorno virtual, instalando las dependencias de `requirements.txt` y usando Ollama local como proveedor final del agente.
 
-Copia el fichero de configuración de ejemplo:
+El archivo `.env.example` incluye una configuración de ejemplo segura. El archivo real `.env`, en caso de utilizarse, es privado y no debe añadirse nunca a Git.
 
-```powershell
-Copy-Item .env.example .env
-```
+Para la demostración principal no es necesario configurar PoliGPT ni conectarse a la VPN de la UPV, ya que la configuración final recomendada utiliza Ollama local, embeddings locales y FAISS.
 
-El archivo `.env` es privado y no debe añadirse nunca a Git.
 
 ## Configuración final recomendada
 
@@ -301,32 +293,19 @@ La respuesta contiene:
 
 ## Frontend Streamlit para la demostración
 
-Además de la interfaz obligatoria mediante `consultar.py`, el proyecto incluye un frontend mínimo funcional con Streamlit para facilitar la presentación oral del agente.
+Además de la interfaz obligatoria mediante `consultar.py`, el proyecto incluye un frontend funcional con Streamlit para facilitar la presentación oral del agente.
 
-La interfaz permite:
+La interfaz permite visualizar de forma clara:
 
-- escribir una pregunta sobre DNI;
-- consultar el agente RAG usando la función `consultar`;
-- mostrar la respuesta generada;
-- visualizar las fuentes documentales utilizadas;
-- consultar las métricas de ejecución;
-- desplegar las evidencias recuperadas;
-- comprobar el rechazo de preguntas fuera de ámbito;
-- mostrar contradicciones reales del corpus, como los horarios de desayunos solidarios.
+* la pregunta introducida;
+* la respuesta generada por el agente;
+* las fuentes documentales utilizadas;
+* las métricas de ejecución;
+* las evidencias recuperadas;
+* el rechazo de preguntas fuera de ámbito;
+* las contradicciones reales del corpus, como los horarios de desayunos solidarios.
 
-Para iniciar la interfaz, con el entorno virtual activo y Ollama en ejecución:
-
-```powershell
-python -m streamlit run streamlit_app.py
-```
-
-Después, abrir en el navegador la URL local indicada por Streamlit, normalmente:
-
-```text
-http://localhost:8501
-```
-
-Consultas recomendadas para la demostración:
+El frontend se lanza siguiendo la **Guía rápida para la defensa**. Las consultas recomendadas para demostrar el sistema son:
 
 ```text
 ¿Qué es DNI?
@@ -339,6 +318,7 @@ Este frontend es un adaptador de entrada adicional para demostración. No sustit
 ```python
 from consultar import consultar
 ```
+
 
 ## Benchmark con cuatro modelos
 
@@ -414,6 +394,7 @@ Resultado actual:
 pracAgentes/
 ├── consultar.py
 ├── features.json
+├── streamlit_app.py
 ├── GRUPO.md
 ├── AI_USAGE.md
 ├── .env.example
